@@ -2,7 +2,6 @@ version: "3.3"
 
 services:
   db:
-    #image: mongo:latest
     image: andresvidal/rpi3-mongodb3:latest
     networks:
       - moviegobs
@@ -34,8 +33,7 @@ services:
     ports:
       - 8888:8888
     volumes:
-      - moviegobsvol:/go/fsData
-      #- moviegobsvol:/root/fsData
+      - moviegobsvol:/root/fsData
     depends_on:
       - db
 
@@ -58,8 +56,7 @@ services:
     ports:
       - 9999:9999
     volumes:
-      - tvgobsvol:/go/fsData
-      #- tvgobsvol:/root/fsData
+      - tvgobsvol:/root/fsData
     depends_on:
       - db
 
@@ -72,9 +69,6 @@ volumes:
     driver: local
     driver_opts:
       type: none
-#THIS NEEDS TO BE CHANGE TO THE CORRECT PATH ON THE PI
-      #device: /home/charlie/Video/media
-      #device: /home/teresa/Videos/media
       device: /media/pi/PiTB/
       o: bind
 
@@ -82,8 +76,5 @@ volumes:
     driver: local
     driver_opts:
       type: none
-#THIS NEEDS TO BE CHANGE TO THE CORRECT PATH ON THE PI
-      #device: /home/charlie/Video/media
-      #device: /home/teresa/Videos/media
       device: /media/pi/PiTB/
       o: bind
