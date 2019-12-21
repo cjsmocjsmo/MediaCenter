@@ -1,0 +1,150 @@
+package moviegolib
+
+import (
+	"fmt"
+	"io"
+	"log"
+	"os"
+	"path/filepath"
+	"time"
+
+	"github.com/globalsign/mgo"
+)
+
+//DBcon is exported for all our db connection objects
+func DBcon() *mgo.Session {
+	fmt.Println("Starting Update db session")
+	s, err := mgo.Dial(os.Getenv("MOVIEGOBS_MONGODB_ADDRESS"))
+	if err != nil {
+		fmt.Println("this is dial err")
+		panic(err)
+	}
+	return s
+}
+
+func isDirEmpty(name string) (bool, error) {
+	f, err := os.Open(name)
+	if err != nil {
+		return false, err
+	}
+	defer f.Close()
+
+	// read in ONLY one file
+	_, err = f.Readdir(1)
+
+	// and if the file is EOF... well, the dir is empty.
+	if err == io.EOF {
+		return true, nil
+	}
+	return false, err
+}
+
+func processMovs(pAth string) {
+	log.Println("Process_Movs has started")
+	var movpicPath string
+
+	movpicPath = FindPicPaths(pAth, os.Getenv("MOVIEGOBS_NO_ART_PIC_PATH"))
+	var MovI MOVI
+	MovI = getmovieInfo(pAth, movpicPath)
+	ses := DBcon()
+	defer ses.Close()
+	MTc := ses.DB("moviegobs").C("moviegobs")
+	err := MTc.Insert(&MovI)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return
+}
+
+func posterdirVisit(posterpath string, f os.FileInfo, err error) error {
+	ext := filepath.Ext(posterpath)
+	if err != nil {
+		fmt.Println(err) // can't walk here,
+		return nil       // but continue walking elsewhere
+	}
+	if f.IsDir() {
+		log.Println("fi its a dir")
+	} else if ext == ".txt" {
+		log.Println("its a txt file")
+	} else {
+		log.Println("starting createmoviesthumbnail")
+		CreateMoviesThumbnail(posterpath)
+	}
+	return nil
+}
+
+func genMatch(patH string, mtv bool) {
+	if mtv {
+		//Process_tvshow_info(patH)
+	} else {
+		processMovs(patH)
+	}
+}
+
+func myDirVisit(pAth string, f os.FileInfo, err error) error {
+	log.Printf("this is path: %s", pAth)
+	if err != nil {
+		fmt.Println(err) // can't walk here,
+		return nil       // but continue walking elsewhere
+	}
+	if f.IsDir() {
+		return nil // not a file.  ignore.
+	}
+	ext := filepath.Ext(pAth)
+	if ext == "" {
+		return nil //not a pic or movie
+	}
+	matchedTV, err := filepath.Match("*TVShows", f.Name())
+	if err != nil {
+		fmt.Println(err) // malformed pattern
+		return err       // this is fatal.
+	}
+	switch {
+	case ext == ".mp4":
+		genMatch(pAth, matchedTV)
+	case ext == ".mkv":
+		genMatch(pAth, matchedTV)
+	case ext == ".avi":
+		genMatch(pAth, matchedTV)
+	case ext == ".m4v":
+		genMatch(pAth, matchedTV)
+	}
+	return nil
+}
+
+//SetUp is exported to main
+func SetUp() (ExStat int) {
+	//Start the timer
+	startTime := time.Now().Unix()
+	fmt.Printf("setup function has started at: %T", startTime)
+	//Connect to the DB
+	sess := DBcon()
+	err := sess.DB("moviegobs").DropDatabase()
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = sess.DB("movbsthumb").DropDatabase()
+	sess.Close()
+	fmt.Println("moviegobs and movbsthumb dbs have been dropped")
+	//Check thumbnail dir create thumbs if empty
+	empty, err := isDirEmpty("./static/images/thumbnails")
+	if empty {
+		filepath.Walk(os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"), posterdirVisit)
+	} else {
+		fmt.Println("thumb dir populated")
+	}
+	err = filepath.Walk(os.Getenv("MOVIEGOBS_MOVIES_PATH"), myDirVisit)
+	if err != nil {
+		fmt.Println(err)
+	}
+	os.Setenv("MOVIEGOBS_SETUP", "0")
+	fmt.Printf("this is noartlist :: %s", NoArtList)
+	fmt.Println(startTime)
+	stopTime := time.Now().Unix()
+	fmt.Println(stopTime)
+	etime := stopTime - startTime
+	fmt.Println(etime)
+	fmt.Println("SETUP IS COMPLETE")
+	ExStat = 0
+	return
+}
