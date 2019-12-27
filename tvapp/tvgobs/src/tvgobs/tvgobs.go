@@ -28,7 +28,6 @@ import (
 	"net/url"
 	"os"
 	tvgolib "tvgobs/tvgobslib"
-
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/gorilla/mux"
@@ -166,21 +165,16 @@ func intVoyagerHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(eff)
 	}
 	s1 := m["season"][0]
-	fmt.Printf("this is seasonOne type %T \n", s1)
-
 	ses := DBcon()
 	defer ses.Close()
 	MTyc := ses.DB("tvgobs").C("tvgobs")
-	//fmt.Println(m)
 	var voyagerMedia []map[string]string
 	b1 := bson.M{"catagory": "Voyager", "season": s1}
 	b2 := bson.M{"_id": 0}
-	fmt.Printf("this is b1 %s", b1)
 	errG := MTyc.Find(b1).Select(b2).All(&voyagerMedia)
 	if errG != nil {
 		fmt.Println(errG)
 	}
-	fmt.Println(&voyagerMedia)
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -198,8 +192,6 @@ func intLastShipHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(eff)
 	}
 	s1 := m["season"][0]
-	fmt.Printf("this is seasonOne type %T \n", s1)
-
 	ses := DBcon()
 	defer ses.Close()
 	MTyc := ses.DB("tvgobs").C("tvgobs")
@@ -256,7 +248,6 @@ func playMediaHandler(w http.ResponseWriter, r *http.Request) {
 	omxAddr := os.Getenv("tvGOBS_OMXPLAYER_ADDRESS")
 	u, _ = url.Parse(omxAddr)
 	q, _ := url.ParseQuery(u.RawQuery)
-
 	q.Add("medPath", omxAddr)
 	u.RawQuery = q.Encode()
 	resp, err := http.Get(u.String())

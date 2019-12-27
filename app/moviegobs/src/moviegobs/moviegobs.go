@@ -26,13 +26,10 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-
-	//omxplayer "moviegobs/libbs"
 	moviegolib "moviegobs/moviegobslib"
 	"net/http"
 	"net/url"
 	"os"
-
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/gorilla/mux"
@@ -82,7 +79,6 @@ func intCartoonsHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	fmt.Println(&CartoonMedia)
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -231,7 +227,7 @@ func intMenInBlackHandler(w http.ResponseWriter, r *http.Request) {
 	MTc := ses.DB("moviegobs").C("moviegobs")
 	var MenInBlackMedia []map[string]string
 	b1 := bson.M{"catagory": "MenInBlack"}
-	b2 := bson.M{"_id": 0, "dirpath": 0, "filepath": 0, "genre": 0, "catagory": 0, "movfspath": 0, "movyear": 0}
+	b2 := bson.M{"_id": 0}
 	err := MTc.Find(b1).Select(b2).All(&MenInBlackMedia)
 	if err != nil {
 		log.Println(err)
@@ -260,22 +256,13 @@ func intMiscHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func intSciFiHandler(w http.ResponseWriter, r *http.Request) {
-	f, err := os.OpenFile(os.Getenv("MOVIEGOBS_LOG"), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		log.Fatalf("error opening file: %v", err)
-	}
-	defer f.Close()
-	wrt3 := io.MultiWriter(os.Stdout, f)
-	log.SetOutput(wrt3)
-	log.Println("starting initSciFi function")
 	ses := dBcon()
-	log.Println("DB connection established initscifi function")
 	defer ses.Close()
 	MTc := ses.DB("moviegobs").C("moviegobs")
 	var SciFiMedia []map[string]string
 	b1 := bson.M{"catagory": "SciFi"}
 	b2 := bson.M{"_id": 0}
-	err = MTc.Find(b1).Select(b2).All(&SciFiMedia)
+	err := MTc.Find(b1).Select(b2).All(&SciFiMedia)
 	if err != nil {
 		log.Println("this is a database lookup error for the InitSciFiHandler function")
 		log.Println(err)
@@ -356,23 +343,24 @@ func intTremorsHandler(w http.ResponseWriter, r *http.Request) {
 
 func playMediaHandler(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.URL.String())
-	CheckLog(err)
+	if err != nil {
+		fmt.Println(err)
+	}
 	m, _ := url.ParseQuery(u.RawQuery)
 	mf := m["movie"][0]
 	ses := dBcon()
 	defer ses.Close()
-
 	var MediaInfo map[string]string
 	MTc := ses.DB("moviegobs").C("moviegobs")
 	b1 := bson.M{"movfspath": mf}
 	b2 := bson.M{"_id": 0}
 	err = MTc.Find(b1).Select(b2).One(&MediaInfo)
-	CheckLog(err)
-
+	if err != nil {
+		fmt.Println(err)
+	}
 	omxAddr := os.Getenv("MOVIEGOBS_OMXPLAYER_ADDRESS")
 	u, _ = url.Parse(omxAddr)
 	q, _ := url.ParseQuery(u.RawQuery)
-
 	q.Add("medPath", omxAddr)
 	u.RawQuery = q.Encode()
 	resp, err := http.Get(u.String())
@@ -380,15 +368,12 @@ func playMediaHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 	defer resp.Body.Close()
-
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
 	}
 	Abody := string(body)
-
 	fmt.Println(Abody)
-
 	fmt.Printf("this is mediainfo sent to browser: %s", MediaInfo)
 	log.Printf("this is mediainfo filepath: %s", MediaInfo)
 	log.Println("Sending info to omxplayer server")
@@ -427,32 +412,7 @@ func UpdateHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(exitstatus)
 }
 
-//CheckLog checks for errors
-func CheckLog(e error) {
-	if e != nil {
-		f, errr := os.OpenFile(os.Getenv("MOVIEGOBS_LOG"), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-		if errr != nil {
-			fmt.Println(errr)
-		}
-		defer f.Close()
-		myiowrt := io.MultiWriter(os.Stdout, f)
-		log.SetOutput(myiowrt)
-		log.Println(e)
-		panic(e)
-	}
-}
-
 func main() {
-
-	// f, err := os.OpenFile(os.Getenv("MOVIEGOBS_LOG"), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	// if err != nil {
-	// 	log.Fatalf("error opening file: %v", err)
-	// }
-	// defer f.Close()
-	// wrt1 := io.MultiWriter(os.Stdout, f)
-	// log.SetOutput(wrt1)
-	// log.Println("Log file created")
-
 	r := mux.NewRouter()
 	s := r.PathPrefix("/static").Subrouter()
 	r.HandleFunc("/moviego", showMovieGo)
