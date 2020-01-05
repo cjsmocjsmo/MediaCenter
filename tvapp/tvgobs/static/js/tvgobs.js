@@ -33,6 +33,31 @@ const f2 = "data-filepath="
 const f3 = " class='tvshowLBtn list-group-item list-group-item-action'>";
 const f4 = "</a>";
 
+function epiFunc(epiData) {
+	let epList = "";
+	$.each(epiData, (i, v)=> {
+		const endURI = encodeURIComponent(v.movfspath);
+		epList = epList + f1 + f2 + endURI + f3 + v.title + f4;
+	})
+	$('#tvshowList').append(epList);
+}
+
+function myAjax(omxCMD) {
+	$.ajax({
+		"url": omxCMD,
+		"method": "GET",
+		'cache': false,
+		'dataType': "jsonp",
+		"async": true,
+		"crossDomain": true,
+		"headers": {
+			"accept": "text/html",
+			"Access-Control-Allow-Origin": "*",
+			"X-Content-Type-Options": "nosniff",
+		},	
+	})
+}
+
 $(document).on('click', '#logo', ()=> {
 	$('#logo').hide();
 	$('#workingLogo').show();
@@ -55,8 +80,7 @@ $(document).on('click', '#logo', ()=> {
 	$('#movies').collapse("hide");
 })
 .on('click', '.tvshowLBtn', ()=> {
-	let enctvshow = $(this).attr("data-filepath");
-	let tvshow = decodeURIComponent(enctvshow);
+	let tvshow = decodeURIComponent($(this).attr("data-filepath"));
 	$.ajax({
 		"url": omxplayer_server_playmedia,
 		"method": "GET",
@@ -76,181 +100,85 @@ $(document).on('click', '#logo', ()=> {
 })
 .on("click", ".orvilleSBtn", ()=> {
 	$('#orvilleModal').modal('hide');
-	const season = $(this).attr("data-season");
 	$('#tvshowList').empty();
 	$.get("intOrville", {
-		"season": season
+		"season": $(this).attr("data-season")
 	},
 	(data)=> {
-		let epList = "";
-		$.each(data, (i, v)=> {
-			const endURI = encodeURIComponent(v.movfspath);
-			epList = epList + f1 + f2 + endURI + f3 + v.title + f4;
-		})
-		$('#tvshowList').append(epList);
+		epiFunc(data);
 	})
 })
 .on('click', '.sttvSBtn', ()=> {
 	$('#sttvModal').modal('hide');
-	const season = $(this).attr("data-season");
 	$('#tvshowList').empty();
 	$.get("intSTTV", {
-		"season": season
+		"season": $(this).attr("data-season")
 	},
 	(data)=> {
-		let epList = "";
-		$.each(data, (i, v)=> {
-			const endURI = encodeURIComponent(v.movfspath);
-			epList = epList + f1 + f2 + endURI + f3 + v.title + f4;
-		})
-		$('#tvshowList').append(epList);
+		epiFunc(data);
 	})
 })
-
 .on('click', '.nextgenerationSBtn', ()=> {
 	$('#nextgenerationModal').modal('hide');
-	const season = $(this).attr("data-season");
 	$('#tvshowList').empty();
 	$.get("intTNG", {
-		"season": season
+		"season": $(this).attr("data-season")
 	},
 	(data)=> {
-		let epList = "";
-		$.each(data, (i, v)=> {
-			const endURI = encodeURIComponent(v.movfspath);
-			epList = epList + f1 + f2 + endURI + f3 + v.title + f4;
-		})
-		$('#tvshowList').append(epList);
+		epiFunc(data);
 	})
 })
-
 .on('click', '.enterpriseSBtn', ()=> {
 	$('#enterpriseModal').modal('hide');
-	const season = $(this).attr("data-season");
 	$('#tvshowList').empty();
 	$.get("intEnterprise", {
-		"season": season
+		"season": $(this).attr("data-season")
 	},
 	(data)=> {
-		let epList = "";
-		$.each(data, (i, v)=> {
-			const endURI = encodeURIComponent(v.movfspath);
-			epList = epList + f1 + f2 + endURI + f3 + v.title + f4;
-		})
-		$('#tvshowList').append(epList);
+		epiFunc(data);
 	})
 })
-
 .on('click', '.discoverySBtn', ()=> {
 	$('#discoveryModal').modal('hide');
-	const season = $(this).attr("data-season");
 	$('#tvshowList').empty();
 	$.get("intDiscovery", {
-		"season": season
+		"season": $(this).attr("data-season")
 	},
 	(data)=> {
-		let epList = "";
-		$.each(data, (i, v)=> {
-			const endURI = encodeURIComponent(v.movfspath);
-			epList = epList + f1 + f2 + endURI + f3 + v.title + f4;
-		})
-		$('#tvshowList').append(epList);
+		epiFunc(data);
 	})
 })
-
 .on('click', '.voyagerSBtn', ()=> {
 	$('#voyagerModal').modal('hide');
-	const season = $(this).attr("data-season");
 	$('#tvshowList').empty();
 	$.get("intVoyager", {
-		"season": season
+		"season": $(this).attr("data-season")
 	},
 	(data)=> {
-		let epList = "";
-		$.each(data, (i, v)=> {
-			const endURI = encodeURIComponent(v.movfspath);
-			epList = epList + f1 + f2 + endURI + f3 + v.title + f4;
-		})
-		$('#tvshowList').append(epList);
+		epiFunc(data);
 	})
 })
-
 .on('click', '.lastshipSBtn', ()=> {
 	$('#lastshipModal').modal('hide');
-	const season = $(this).attr("data-season");
 	$('#tvshowList').empty();
 	$.get("intLastShip", {
-		"season": season
+		"season": $(this).attr("data-season")
 	},
 	(data)=> {
-		let epList = "";
-		$.each(data, (i, v)=> {
-			const endURI = encodeURIComponent(v.movfspath);
-			epList = epList + f1 + f2 + endURI + f3 + v.title + f4;
-		})
-		$('#tvshowList').append(epList);
+		epiFunc(data);
 	})
 })
-
 .on('click', '#prevBtn', ()=> {
-	$.ajax({
-	"url": omxplayer_server_prev,
-	"method": "GET",
-	'cache': false,
-	'dataType': "jsonp",
-	"async": true,
-	"crossDomain": true,
-	"headers": {
-		"accept": "text/html",
-		"Access-Control-Allow-Origin": "*",
-		"X-Content-Type-Options": "nosniff",
-	},
-	})
+	myAjax(omxplayer_server_prev);
 })
 .on('click', '#prevChapterBtn', ()=> {
-	$.ajax({
-	"url": omxplayer_server_prev_chapter,
-	"method": "GET",
-	'cache': false,
-	'dataType': "jsonp",
-	"async": true,
-	"crossDomain": true,
-	"headers": {
-		"accept": "text/html",
-		"Access-Control-Allow-Origin": "*",
-		"X-Content-Type-Options": "nosniff",
-	},
-	})
+	myAjax(omxplayer_server_prev_chapter);
 })
 .on('click', '#nextBtn', ()=> {
-	$.ajax({
-	"url": omxplayer_server_next,
-	"method": "GET",
-	'cache': false,
-	'dataType': "jsonp",
-	"async": true,
-	"crossDomain": true,
-	"headers": {
-		"accept": "text/html",
-		"Access-Control-Allow-Origin": "*",
-		"X-Content-Type-Options": "nosniff",
-	},
-	})
+	myAjax(omxplayer_server_next);
 })
 .on('click', '#nextChapterBtn', ()=> {
-	$.ajax({
-	"url": omxplayer_server_next_chapter,
-	"method": "GET",
-	'cache': false,
-	'dataType': "jsonp",
-	"async": true,
-	"crossDomain": true,
-	"headers": {
-		"accept": "text/html",
-		"Access-Control-Allow-Origin": "*",
-		"X-Content-Type-Options": "nosniff",
-	},
-	})
+	myAjax(omxplayer_server_next_chapter);
 })
 .on('click', '#playBtn', ()=> {
 	let bval = $('#playBtn').text();
@@ -259,32 +187,8 @@ $(document).on('click', '#logo', ()=> {
 	} else {
 		$('#playBtn').html("Pause");
 	}
-	$.ajax({
-	"url": omxplayer_server_play,
-	"method": "GET",
-	'cache': true,
-	"async": true,
-	"crossDomain": true,
-	"headers": {
-		"accept": "text/html",
-		"Access-Control-Allow-Origin": "*",
-		"Content-Type": "text/html",
-	},
-
-	})
+	myAjax(omxplayer_server_play);
 })
 .on('click', '#stopBtn', ()=> {
-	$.ajax({
-	"url": omxplayer_server_stop,
-	"method": "GET",
-	'cache': false,
-	'dataType': "jsonp",
-	"async": true,
-	"crossDomain": true,
-	"headers": {
-		"accept": "text/html",
-		"Access-Control-Allow-Origin": "*",
-		"X-Content-Type-Options": "nosniff",
-	},
-	})
+	myAjax(omxplayer_server_stop);
 });

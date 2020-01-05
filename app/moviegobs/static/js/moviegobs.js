@@ -113,7 +113,7 @@ $(document).on('click', '#logo', ()=> {
 	$('#movies').collapse("hide");
 })
 
-.on('click', '.taz', function () {
+.on('click', '.taz', ()=> {
 	var movie = $(this).data();
 	console.log('this is movid');
 	console.log(movie);
@@ -135,7 +135,7 @@ $(document).on('click', '#logo', ()=> {
 	})
 })
 
-.on('click', '#actionBtn', function () {
+.on('click', '#actionBtn', ()=> {
 	$.get('intAction', function (data) {
 		mainFunc(data);
 	})
@@ -145,72 +145,72 @@ $(document).on('click', '#logo', ()=> {
 		mainFunc(data);
 	})
 })
-.on('click', '#comedyBtn', function () {
+.on('click', '#comedyBtn', ()=> {
 	$.get('intComedy', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#dramaBtn', function () {
+.on('click', '#dramaBtn', ()=> {
 	$.get('intDrama', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#godzillaBtn', function () {
+.on('click', '#godzillaBtn', ()=> {
 	$.get('intGodzilla', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#harrypotterBtn', function () {
+.on('click', '#harrypotterBtn', ()=> {
 	$.get('intHarryPotter', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#indianajonesBtn', function () {
+.on('click', '#indianajonesBtn', ()=> {
 	$.get('intIndianaJones', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#johnwayneBtn', function () {
+.on('click', '#johnwayneBtn', ()=> {
 	$.get('intJohnWayne', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#jurassicparkBtn', function () {
+.on('click', '#jurassicparkBtn', ()=> {
 	$.get('intJurassicPark', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#kingsmanBtn', function () {
+.on('click', '#kingsmanBtn', ()=> {
 	$.get('intKingsMan', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#meninblackBtn', function () {
+.on('click', '#meninblackBtn', ()=> {
 	$.get('intMenInBlack', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#miscBtn', function () {
+.on('click', '#miscBtn', ()=> {
 	$.get('intMisc', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#scifiBtn', function () {
+.on('click', '#scifiBtn', ()=> {
 	$.get('intSciFi', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#startrekBtn', function () {
+.on('click', '#startrekBtn', ()=> {
 	$.get('intStarTrek', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#starwarsBtn', function () {
+.on('click', '#starwarsBtn', ()=> {
 	$.get('intStarWars', function (data) {
 		mainFunc(data);
 	})
 })
-.on('click', '#superherosBtn', function () {
+.on('click', '#superherosBtn', ()=> {
 	$.get('intSuperHeros', function (data) {
 		mainFunc(data);
 	})
