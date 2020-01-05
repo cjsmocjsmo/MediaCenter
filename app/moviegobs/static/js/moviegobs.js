@@ -4,13 +4,13 @@ function hideStuff() {
 };
 
 function nasaPic() {
-	$.get("https://api.nasa.gov/planetary/apod?api_key=qdSdMLU2yc4wXQM9goawTdAA7sngW9KoLkDsVhWG", function (data) {
+	$.get("https://api.nasa.gov/planetary/apod?api_key=qdSdMLU2yc4wXQM9goawTdAA7sngW9KoLkDsVhWG", (data)=> {
 		$('#nasaPOD').attr('src', data.url);
 	})
 };
 
 function nasaMarsPic() {
-	$.get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=qdSdMLU2yc4wXQM9goawTdAA7sngW9KoLkDsVhWG", function (data) {
+	$.get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=qdSdMLU2yc4wXQM9goawTdAA7sngW9KoLkDsVhWG", (data)=> {
 		$('#nasaMarsPOD').attr('src', data.photos[0].img_src);
 	})
 };
@@ -34,8 +34,6 @@ const omxplayer_server_prev = "http://192.168.0.42:8181/Previous"
 const omxplayer_server_next = "http://192.168.0.42:8181/Next"
 const omxplayer_server_prev_chapter = "http://192.168.0.42:8181/PreviousChapter"
 const omxplayer_server_next_chapter = "http://192.168.0.42:8181/NextChapter"
-
-
 
 function movcountOne(movcount) {
 	let p4 = movcount[0].thumbpath;
@@ -67,7 +65,7 @@ function mainFunc(mydata) {
 	if ( mydata.length % 2 != 0 ) {
 		mlast = movcountOdd(mydata);
 	}
-	$.each(mydata, function (I, V) {
+	$.each(mydata, (I, V)=> {
 		mcount += 1;
 		if( mcount == 1 ) {
 			let p4 = V.thumbpath;
@@ -91,6 +89,17 @@ function mainFunc(mydata) {
 	$('#mainContainer').append(mresult);
 }	
 
+
+$('#catagoriesBtn').on('click', ()=> {
+	$('#moviesGroup').collapse("hide");
+});
+
+$('#groupsBtn').on('click', ()=> {
+	$('#movies').collapse("hide");
+});
+
+
+
 $(document).on('click', '#logo', ()=> {
 	$('#logo').hide();
 	$('#workingLogo').show();
@@ -106,17 +115,11 @@ $(document).on('click', '#logo', ()=> {
 	$("#moviesGroup").collapse("hide");
 	$('#mainContainer').empty();
 })
-.on('click', '#catagoriesBtn', ()=> {
-	$('#moviesGroup').collapse("hide");
-})
-.on('click', '#groupsBtn', ()=> {
-	$('#movies').collapse("hide");
-})
+
+
 
 .on('click', '.taz', ()=> {
-	var movie = $(this).data();
-	console.log('this is movid');
-	console.log(movie);
+	const movie = $(this).data();
 	$.ajax({
 		"url": omxplayer_server_playmedia,
 		"method": "GET",
@@ -136,7 +139,7 @@ $(document).on('click', '#logo', ()=> {
 })
 
 .on('click', '#actionBtn', ()=> {
-	$.get('intAction', function (data) {
+	$.get('intAction', (data)=> {
 		mainFunc(data);
 	})
 })
@@ -146,72 +149,72 @@ $(document).on('click', '#logo', ()=> {
 	})
 })
 .on('click', '#comedyBtn', ()=> {
-	$.get('intComedy', function (data) {
+	$.get('intComedy', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#dramaBtn', ()=> {
-	$.get('intDrama', function (data) {
+	$.get('intDrama', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#godzillaBtn', ()=> {
-	$.get('intGodzilla', function (data) {
+	$.get('intGodzilla', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#harrypotterBtn', ()=> {
-	$.get('intHarryPotter', function (data) {
+	$.get('intHarryPotter', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#indianajonesBtn', ()=> {
-	$.get('intIndianaJones', function (data) {
+	$.get('intIndianaJones', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#johnwayneBtn', ()=> {
-	$.get('intJohnWayne', function (data) {
+	$.get('intJohnWayne', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#jurassicparkBtn', ()=> {
-	$.get('intJurassicPark', function (data) {
+	$.get('intJurassicPark', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#kingsmanBtn', ()=> {
-	$.get('intKingsMan', function (data) {
+	$.get('intKingsMan', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#meninblackBtn', ()=> {
-	$.get('intMenInBlack', function (data) {
+	$.get('intMenInBlack', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#miscBtn', ()=> {
-	$.get('intMisc', function (data) {
+	$.get('intMisc', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#scifiBtn', ()=> {
-	$.get('intSciFi', function (data) {
+	$.get('intSciFi', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#startrekBtn', ()=> {
-	$.get('intStarTrek', function (data) {
+	$.get('intStarTrek', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#starwarsBtn', ()=> {
-	$.get('intStarWars', function (data) {
+	$.get('intStarWars', (data)=> {
 		mainFunc(data);
 	})
 })
 .on('click', '#superherosBtn', ()=> {
-	$.get('intSuperHeros', function (data) {
+	$.get('intSuperHeros', (data)=> {
 		mainFunc(data);
 	})
 })

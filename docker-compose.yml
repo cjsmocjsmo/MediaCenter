@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   db:
-    image: mongodb3:latest
+    image: andresvidal/rpi3-mongodb3:latest
     networks:
       - moviegobs
       - tvgobs
@@ -10,7 +10,7 @@ services:
       - 27017:27017
 
   app:
-    image: app
+    image: app:1.1
     build: ./app
     environment:
       - MOVIEGOBS_SETUP=1
@@ -38,7 +38,7 @@ services:
       - db
 
   tvapp:
-    image: tvapp
+    image: tvapp:1.1
     build: ./tvapp
     environment:
       - TVGOBS_SETUP=1
@@ -69,12 +69,12 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/charlie/Video
+      device: /media/pi/PiTB/media
       o: bind
 
   tvgobsvol:
     driver: local
     driver_opts:
       type: none
-      device: /home/charlie/Video
+      device: /media/pi/PiTB/media
       o: bind
