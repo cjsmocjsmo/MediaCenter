@@ -1,0 +1,67 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/1/./kompose-linux-amd64 --file ./docker-compose.yml
+      convert
+    kompose.version: 1.18.0 (06a2e56)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app
+  name: app
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: app
+    spec:
+      containers:
+      - env:
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: example
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: root
+        - name: MOVIEGOBS_HARDDRIVE_POSTERS_PATH
+          value: ./fsData/media/Posters
+        - name: MOVIEGOBS_LOG
+          value: ./logs/MOVIEGOBS_log.txt
+        - name: MOVIEGOBS_MONGODB_ADDRESS
+          value: mongodb://db:27017/moviegobs
+        - name: MOVIEGOBS_MONGODB_THUMB_ADDRESS
+          value: mongodb://db:27017/movbsthumb
+        - name: MOVIEGOBS_MOVIES_PATH
+          value: ./fsData/media/Movies
+        - name: MOVIEGOBS_NO_ART_PIC_PATH
+          value: ./static/images/animals.jpg
+        - name: MOVIEGOBS_OMXPLAYER_ADDRESS
+          value: '"http://192.168.0.42"'
+        - name: MOVIEGOBS_SETUP
+          value: "1"
+        - name: MOVIEGOBS_TEMPLATE_ADDRESS
+          value: ./static/templates/moviegobs.template
+        - name: MOVIEGOBS_THUMBNAIL_CAROS_PIC_PATH
+          value: ./static/images/caros_thumbnails
+        - name: MOVIEGOBS_THUMBNAIL_PIC_PATH
+          value: ./static/images/thumbnails
+        - name: MOVIEGOBS_THUMB_BASE_PATH
+          value: ./static/images/thumbnails
+        - name: MOVIEGOBS_TVSHOWS_PATH
+          value: ./fsData/media/TVShows
+        image: app
+        name: app
+        ports:
+        - containerPort: 8888
+        resources: {}
+        volumeMounts:
+        - mountPath: /root/fsData
+          name: moviegobsvol
+      restartPolicy: Always
+      volumes:
+      - name: moviegobsvol
+        persistentVolumeClaim:
+          claimName: moviegobsvol
+status: {}

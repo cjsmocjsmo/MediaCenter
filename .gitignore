@@ -1,0 +1,16 @@
+*.go~
+*.js~
+*.css~
+*.yaml~
+*.yml~
+*.template~
+app/moviegobs/pkg/*
+app/moviegobs/src/github.com/*
+app/moviegobs/src/golang.org/*
+app/moviegobs/src/gopkg.in/*
+
+
+tvapp/tvgobs/pkg/*
+tvapp/tvgobs/src/github.com/*
+tvapp/tvgobs/src/golang.org/*
+tvapp/tvgobs/src/gopkg.in/*

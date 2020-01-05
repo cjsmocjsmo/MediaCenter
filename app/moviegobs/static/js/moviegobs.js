@@ -8,13 +8,12 @@ function nasaPic() {
 		$('#nasaPOD').attr('src', data.url);
 	})
 };
+
 function nasaMarsPic() {
 	$.get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=qdSdMLU2yc4wXQM9goawTdAA7sngW9KoLkDsVhWG", function (data) {
 		$('#nasaMarsPOD').attr('src', data.photos[0].img_src);
 	})
 };
-
-
 
 $(window).on("load", ()=> {
 	hideStuff();
@@ -27,28 +26,6 @@ const p2 = "<div class='pt-1 pb-1 col'>";
 const p3 = "<img class='taz d-block mx-auto' src='";
 const p5 = "' ";
 const p5a = "' style='width: 35%;'";
-
-
-
-
-// const a1 = "<div class='carousel-item'>";
-// const a1a = "<div class='carousel-item active'>";
-// const a2 = "<img class='tazCaro d-block mx-auto w-20' src='";
-// const a4 = "' ";
-// const a5 = "data-movieid='";
-// const a7 = "'></div>";
-
-
-
-
-// const b1 = "<li data-movie='";
-// const b2 = "' data-target='#demo' data-slide-to='";
-// const b3a = "' class='active'></li>";
-// const b3b = "' ></li>";
-
-
-
-
 
 const omxplayer_server_playmedia = "http://192.168.0.42:8181/OmxplayerPlayMedia"
 const omxplayer_server_play = "http://192.168.0.42:8181/Play"
@@ -147,7 +124,6 @@ $(document).on('click', '#logo', ()=> {
 		'dataType': "jsonp",
 		"async": true,
 		"crossDomain": true,
-
 		"data": {
 			"movie": movie["movie"]
 		},
@@ -161,566 +137,86 @@ $(document).on('click', '#logo', ()=> {
 
 .on('click', '#actionBtn', function () {
 	$.get('intAction', function (data) {
-
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#cartoonsBtn', ()=> {
 	$.get('intCartoons', (data)=> {
-		console.log("this is intcartons data");
-		console.log(data);
-
-
-
-
-		// // $('#r2d2').empty();
-		//  $('#r2d2Ind').empty();
-		//  let rcount = 0;
-		// // let result = "";
-		// // let result2 = "";
-		//  $.each(data, function (I, V) {
-		//  	rcount += 1;
-		//  	if (rcount == 1) {
-		// // 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		//  		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-	 	// } else {
-		// // 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		//  		c = rcount - 1;
-		//  		cstring = c.toString();
-		//  		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		//  	}
-		//  })
-		// // $('#r2d2').append(result);
-		//  $('#r2d2Ind').append(result2);
-
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#comedyBtn', function () {
 	$.get('intComedy', function (data) {
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#dramaBtn', function () {
 	$.get('intDrama', function (data) {
-
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#godzillaBtn', function () {
 	$.get('intGodzilla', function (data) {
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#harrypotterBtn', function () {
 	$.get('intHarryPotter', function (data) {
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#indianajonesBtn', function () {
 	$.get('intIndianaJones', function (data) {
-		console.log("this is indianajones data");
-		console.log(data);
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#johnwayneBtn', function () {
 	$.get('intJohnWayne', function (data) {
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#jurassicparkBtn', function () {
 	$.get('intJurassicPark', function (data) {
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#kingsmanBtn', function () {
 	$.get('intKingsMan', function (data) {
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#meninblackBtn', function () {
-
 	$.get('intMenInBlack', function (data) {
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#miscBtn', function () {
-
 	$.get('intMisc', function (data) {
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#scifiBtn', function () {
 	$.get('intSciFi', function (data) {
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#startrekBtn', function () {
 	$.get('intStarTrek', function (data) {
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";		
-		// console.log(data);
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#starwarsBtn', function () {
 	$.get('intStarWars', function (data) {
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// console.log(data);
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
 		mainFunc(data);
 	})
 })
 .on('click', '#superherosBtn', function () {
 	$.get('intSuperHeros', function (data) {
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-
-
-		// console.log(data);
-		// $.each(data, function (I, V) {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
 		mainFunc(data);
 	})
 })
-
-
-.on('click', '#cartoonsBtn', ()=> {
-	$.get('intCartoons', (data)=> {
-		console.log("this is cartoons data");
-		console.log(data);
-
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-		// console.log(data);
-		// $.each(data, (I, V)=> {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
-
-		mainFunc(data);
-	})
-})
-
-
-
-
-
 .on('click', '#tremorsBtn', ()=> {
 	$.get('intTremors', (data)=> {
-
-
-
-		// $('#r2d2').empty();
-		// $('#r2d2Ind').empty();
-		// let rcount = 0;
-		// let result = "";
-		// let result2 = "";
-
-
-		// console.log(data);
-		// $.each(data, (I, V)=> {
-		// 	rcount += 1;
-		// 	if (rcount == 1) {
-		// 		result = result + a1a + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		result2 = result2 + b1 + V.movfspath + b2 + "0" + b3a;
-		// 	} else {
-		// 		result = result + a1 + a2 + V.carosthumbpath + a4 + a5 + V.movfspath + a7;
-		// 		c = rcount - 1;
-		// 		cstring = c.toString();
-		// 		result2 = result2 + b1 + V.movfspath + b2 + cstring + b3b;
-		// 	}
-		// })
-		// $('#r2d2').append(result);
-		// $('#r2d2Ind').append(result2);
-
-
 		mainFunc(data);
 	})
 })
