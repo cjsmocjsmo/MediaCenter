@@ -14,7 +14,7 @@ function nasaMarsPic() {
 	})
 };
 
-$(window).on("load", ()=> {
+$(window).on("load", function() {
 	hideStuff();
 	nasaPic();
 	nasaMarsPic();
@@ -58,7 +58,7 @@ function myAjax(omxCMD) {
 	})
 }
 
-$(document).on('click', '#logo', ()=> {
+$(document).on('click', '#logo', function() {
 	$('#logo').hide();
 	$('#workingLogo').show();
 	$.get("Update", (data)=> {
@@ -68,18 +68,18 @@ $(document).on('click', '#logo', ()=> {
 		}
 	})	
 })
-.on('click', '.main', ()=> {
+.on('click', '.main', function() {
 	$('#movies').collapse("hide");
 	$("#moviesGroup").collapse("hide");
 	$('#mainContainer').empty();
 })
-.on('click', '#catagoriesBtn', ()=> {
+.on('click', '#catagoriesBtn', function() {
 	$('#moviesGroup').collapse("hide");
 })
-.on('click', '#groupsBtn', ()=> {
+.on('click', '#groupsBtn', function() {
 	$('#movies').collapse("hide");
 })
-.on('click', '.tvshowLBtn', ()=> {
+.on('click', '.tvshowLBtn', function() {
 	let tvshow = decodeURIComponent($(this).attr("data-filepath"));
 	$.ajax({
 		"url": omxplayer_server_playmedia,
@@ -98,89 +98,96 @@ $(document).on('click', '#logo', ()=> {
 		},
 	})
 })
-.on("click", ".orvilleSBtn", ()=> {
+.on("click", ".orvilleSBtn", function() {
+	let season = $(this).attr("data-season");
 	$('#orvilleModal').modal('hide');
 	$('#tvshowList').empty();
 	$.get("intOrville", {
-		"season": $(this).attr("data-season")
+		"season": season
 	},
 	(data)=> {
 		epiFunc(data);
 	})
 })
-.on('click', '.sttvSBtn', ()=> {
+.on('click', '.sttvSBtn', function () {
+	let season = $(this).attr("data-season");
 	$('#sttvModal').modal('hide');
 	$('#tvshowList').empty();
 	$.get("intSTTV", {
-		"season": $(this).attr("data-season")
+		"season": season
 	},
 	(data)=> {
 		epiFunc(data);
 	})
 })
-.on('click', '.nextgenerationSBtn', ()=> {
+.on('click', '.nextgenerationSBtn', function() {
+	const season = $(this).attr("data-season");
 	$('#nextgenerationModal').modal('hide');
 	$('#tvshowList').empty();
 	$.get("intTNG", {
-		"season": $(this).attr("data-season")
+		"season": season
 	},
 	(data)=> {
 		epiFunc(data);
 	})
 })
-.on('click', '.enterpriseSBtn', ()=> {
+.on('click', '.enterpriseSBtn', function() {
+	let season = $(this).attr("data-season");
 	$('#enterpriseModal').modal('hide');
 	$('#tvshowList').empty();
 	$.get("intEnterprise", {
-		"season": $(this).attr("data-season")
+		"season": season
 	},
 	(data)=> {
 		epiFunc(data);
 	})
 })
-.on('click', '.discoverySBtn', ()=> {
+.on('click', '.discoverySBtn', function() {
+	let season = $(this).attr("data-season");
 	$('#discoveryModal').modal('hide');
 	$('#tvshowList').empty();
 	$.get("intDiscovery", {
-		"season": $(this).attr("data-season")
+		"season": season
 	},
 	(data)=> {
 		epiFunc(data);
 	})
 })
-.on('click', '.voyagerSBtn', ()=> {
+.on('click', '.voyagerSBtn', function() {
+	let season = $(this).attr("data-season")
 	$('#voyagerModal').modal('hide');
 	$('#tvshowList').empty();
 	$.get("intVoyager", {
-		"season": $(this).attr("data-season")
+		"season": season
 	},
 	(data)=> {
 		epiFunc(data);
 	})
 })
-.on('click', '.lastshipSBtn', ()=> {
+.on('click', '.lastshipSBtn', function() {
+	let season = $(this).attr("data-season")
 	$('#lastshipModal').modal('hide');
 	$('#tvshowList').empty();
 	$.get("intLastShip", {
-		"season": $(this).attr("data-season")
+		"season": season
 	},
 	(data)=> {
 		epiFunc(data);
 	})
 })
-.on('click', '#prevBtn', ()=> {
+.on('click', '#prevBtn', function() {
 	myAjax(omxplayer_server_prev);
 })
-.on('click', '#prevChapterBtn', ()=> {
+.on('click', '#prevChapterBtn', function() {
 	myAjax(omxplayer_server_prev_chapter);
 })
-.on('click', '#nextBtn', ()=> {
+.on('click', '#nextBtn', function() {
 	myAjax(omxplayer_server_next);
 })
-.on('click', '#nextChapterBtn', ()=> {
+.on('click', '#nextChapterBtn', function() {
 	myAjax(omxplayer_server_next_chapter);
 })
-.on('click', '#playBtn', ()=> {
+.on('click', '#playBtn', function() {
 	let bval = $('#playBtn').text();
 	if ( bval === "Pause") {
 		$('#playBtn').html("Play");
@@ -189,6 +196,6 @@ $(document).on('click', '#logo', ()=> {
 	}
 	myAjax(omxplayer_server_play);
 })
-.on('click', '#stopBtn', ()=> {
+.on('click', '#stopBtn', function() {
 	myAjax(omxplayer_server_stop);
 });

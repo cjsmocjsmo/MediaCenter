@@ -1,10 +1,10 @@
-FROM golang:1.12.13 AS builder
+FROM arm32v7/golang:1.12.13 AS builder
 COPY tvgobs .
 RUN export GOPATH=/go/src/tvgobs
 RUN go get -v ./src/tvgobs
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./src/tvgobs
 
-FROM alpine:latest
+FROM arm32v6/alpine:latest
 RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 RUN mkdir ./static

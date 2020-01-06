@@ -17,13 +17,12 @@ services:
       - MOVIEGOBS_MONGODB_ADDRESS=mongodb://db:27017/moviegobs
       - MOVIEGOBS_MONGODB_THUMB_ADDRESS=mongodb://db:27017/movbsthumb
       - MOVIEGOBS_LOG=./logs/MOVIEGOBS_log.txt
-      - MOVIEGOBS_MOVIES_PATH=/root/fsData/media/Movies
-      - MOVIEGOBS_TVSHOWS_PATH=/root/fsData/media/TVShows
-      - MOVIEGOBS_HARDDRIVE_POSTERS_PATH=/root/fsData/media/Posters
+      - MOVIEGOBS_MOVIES_PATH=/root/fsData/Movies
+      - MOVIEGOBS_TVSHOWS_PATH=/root/fsData/TVShows
+      - MOVIEGOBS_HARDDRIVE_POSTERS_PATH=/root/fsData/Posters
       - MOVIEGOBS_NO_ART_PIC_PATH=./static/images/animals.jpg
       - MOVIEGOBS_THUMB_BASE_PATH=./static/images/thumbnails
       - MOVIEGOBS_THUMBNAIL_PIC_PATH=./static/images/thumbnails
-      - MOVIEGOBS_THUMBNAIL_CAROS_PIC_PATH=./static/images/caros_thumbnails
       - MOVIEGOBS_TEMPLATE_ADDRESS=./static/templates/moviegobs.template
       - MOVIEGOBS_OMXPLAYER_ADDRESS="http://192.168.0.42"
       - MONGO_INITDB_ROOT_USERNAME=root
@@ -33,7 +32,7 @@ services:
     ports:
       - 8888:8888
     volumes:
-      - moviegobsvol:/root/fsData/media
+      - moviegobsvol:/root/fsData/
     depends_on:
       - db
 
@@ -45,7 +44,7 @@ services:
       - TVGOBS_MONGODB_ADDRESS=mongodb://db:27017/tvgobs
       - TVGOBS_MONGODB_THUMB_ADDRESS=mongodb://db:27017/tvbsthumb
       - TVGOBS_LOG=./logs/tvgobs_log.txt
-      - TVGOBS_TVSHOWS_PATH=/root/fsData/media/TVShows
+      - TVGOBS_TVSHOWS_PATH=/root/fsData/TVShows
       - TVGOBS_NO_ART_PIC_PATH=./static/images/animals.jpg
       - TVGOBS_TEMPLATE_ADDRESS=./static/templates/tvgobs.template
       - TVGOBS_OMXPLAYER_ADDRESS="http://192.168.0.42"
@@ -56,7 +55,7 @@ services:
     ports:
       - 9999:9999
     volumes:
-      - tvgobsvol:/root/fsData/media
+      - tvgobsvol:/root/fsData/
     depends_on:
       - db
 
@@ -76,5 +75,5 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /media/pi/PiTB/media/
+      device: /media/pi/PiTB/media
       o: bind

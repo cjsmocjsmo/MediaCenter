@@ -90,15 +90,6 @@ function mainFunc(mydata) {
 }	
 
 
-$('#catagoriesBtn').on('click', ()=> {
-	$('#moviesGroup').collapse("hide");
-});
-
-$('#groupsBtn').on('click', ()=> {
-	$('#movies').collapse("hide");
-});
-
-
 
 $(document).on('click', '#logo', ()=> {
 	$('#logo').hide();
@@ -115,11 +106,23 @@ $(document).on('click', '#logo', ()=> {
 	$("#moviesGroup").collapse("hide");
 	$('#mainContainer').empty();
 })
+.on('click', '#catagoriesBtn', ()=> {
+	$('#moviesGroup').collapse("hide");
+})
 
+.on('click', '#groupsBtn', ()=> {
+	$('#movies').collapse("hide");
+})
 
+.on('click', '#cartoonsBtn', ()=> {
+	$.get('intCartoons', (data)=> {
+		mainFunc(data);
+	})
+})
 
-.on('click', '.taz', ()=> {
-	const movie = $(this).data();
+.on('click', '.taz', function () {
+	// const movie = $(this).attr("data-movie");
+	// console.log(movie);
 	$.ajax({
 		"url": omxplayer_server_playmedia,
 		"method": "GET",
@@ -128,7 +131,8 @@ $(document).on('click', '#logo', ()=> {
 		"async": true,
 		"crossDomain": true,
 		"data": {
-			"movie": movie["movie"]
+			"movie": $(this).attr("data-movie")
+			// "movie": movie
 		},
 		"headers": {
 			"accept": "text/html",
@@ -143,11 +147,7 @@ $(document).on('click', '#logo', ()=> {
 		mainFunc(data);
 	})
 })
-.on('click', '#cartoonsBtn', ()=> {
-	$.get('intCartoons', (data)=> {
-		mainFunc(data);
-	})
-})
+
 .on('click', '#comedyBtn', ()=> {
 	$.get('intComedy', (data)=> {
 		mainFunc(data);
