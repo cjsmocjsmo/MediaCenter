@@ -1,201 +1,327 @@
-function hideStuff() {
-	$('#workingLogo').hide();
-	w3.slideshow(".madewith", 3000);
-};
-
-function nasaPic() {
-	$.get("https://api.nasa.gov/planetary/apod?api_key=qdSdMLU2yc4wXQM9goawTdAA7sngW9KoLkDsVhWG", function (data) {
+let nasaPic = () => {
+	$.get("https://api.nasa.gov/planetary/apod?api_key=qdSdMLU2yc4wXQM9goawTdAA7sngW9KoLkDsVhWG", (data) => {
 		$('#nasaPOD').attr('src', data.url);
 	})
 };
-function nasaMarsPic() {
-	$.get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=qdSdMLU2yc4wXQM9goawTdAA7sngW9KoLkDsVhWG", function (data) {
+let nasaMarsPic = () => {
+	$.get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=qdSdMLU2yc4wXQM9goawTdAA7sngW9KoLkDsVhWG", (data) => {
 		$('#nasaMarsPOD').attr('src', data.photos[0].img_src);
 	})
 };
 
-$(window).on("load", function() {
+const checkUpdate = () => {
+	$.get("Update", (data) => {
+		if ( data === 0 ) {
+			return true;
+		} else {
+			return false;
+		}
+	})
+};
+
+let hideStuff = () => {
+	if ( checkUpdate ) {
+		$('#logo').hide();
+		$('#workingLogo').hide();
+	} else {
+		$('#logo').show();
+	}	
+};
+
+$(window).on("load", () => {
+	checkUpdate();
 	hideStuff();
 	nasaPic();
 	nasaMarsPic();
+
 });
 
-const omxplayer_server_playmedia = "http://192.168.0.42:8181/OmxplayerPlayMedia"
-const omxplayer_server_play = "http://192.168.0.42:8181/Play"
-const omxplayer_server_stop = "http://192.168.0.42:8181/Stop"
-const omxplayer_server_prev = "http://192.168.0.42:8181/Previous"
-const omxplayer_server_next = "http://192.168.0.42:8181/Next"
-const omxplayer_server_prev_chapter = "http://192.168.0.42:8181/PreviousChapter"
-const omxplayer_server_next_chapter = "http://192.168.0.42:8181/NextChapter"
+const HTTP = "http://192.168.0.42:8181/"
+const OmxPlaymedia = HTTP + "OmxplayerPlayMedia"
+const OmxPlay = HTTP + "Play"
+const OmxStop = HTTP + "Stop"
+const OmxPrev = HTTP + "Previous"
+const OmxNext = HTTP + "Next"
+const OmxPrevChapter = HTTP + "PreviousChapter"
+const OmxNextChapter = HTTP + "NextChapter"
 
-const f1 = "<a href='#' ";
-const f2 = "data-filepath="
-const f3 = " class='tvshowLBtn list-group-item list-group-item-action'>";
-const f4 = "</a>";
+const F1 = "<a href='#' ";
+const F2 = "data-filepath="
+const F3 = " class='tvshowLBtn list-group-item list-group-item-action'>";
+const F4 = "</a>";
 
-function epiFunc(epiData) {
-	let epList = "";
-	$.each(epiData, (i, v)=> {
-		const endURI = encodeURIComponent(v.movfspath);
-		epList = epList + f1 + f2 + endURI + f3 + v.title + f4;
+$(document).ready(() => {
+	$('#logo').click(() => {
+		$('#logo').hide();
+		$('#workingLogo').show();
 	})
-	$('#tvshowList').append(epList);
-}
 
-function myAjax(omxCMD) {
-	$.ajax({
-		"url": omxCMD,
-		"method": "GET",
-		'cache': false,
-		'dataType': "jsonp",
-		"async": true,
-		"crossDomain": true,
-		"headers": {
-			"accept": "text/html",
-			"Access-Control-Allow-Origin": "*",
-			"X-Content-Type-Options": "nosniff",
-		},	
+	$('.main').click(() => {
+		$('#movies').collapse("hide");
+		$("#moviesGroup").collapse("hide");
+		$('#mainContainer').empty();
 	})
-}
 
-$(document).on('click', '#logo', function() {
-	$('#logo').hide();
-	$('#workingLogo').show();
-	$.get("Update", (data)=> {
-		if ( data == 0 ) {
-			$('#logo').show();
-			$('#workingLogo').hide();
+	$('#catagoriesBtn').click(() => {
+		$('#moviesGroup').collapse("hide");
+	})
+
+	$('#groupsBtn').click(() => {
+		$('#movies').collapse("hide");
+	})
+
+	$('.tvshowLBtn').click(() => {
+		let enctvshow = $(this).attr("data-filepath");
+		let tvshow = decodeURIComponent(enctvshow);
+		$.ajax(
+			{
+				"url": OmxPlaymedia,
+				"method": "GET",
+				'cache': false,
+				'dataType': "jsonp",
+				"async": true,
+				"crossDomain": true,
+				"data": {
+					"movie": tvshow,
+				},
+				"headers": {
+					"accept": "text/html",
+					"Access-Control-Allow-Origin": "*",
+					"X-Content-Type-Options": "nosniff",
+				},
+			}
+		)
+	})
+
+	$(".orvilleSBtn").click(() => {
+		$('#orvilleModal').modal('hide');
+		const season = $(this).attr("data-season");
+		$('#tvshowList').empty();
+		$.get("intOrville", {
+			"season": season
+		},
+		(data)=> {
+			let epList = "";
+			$.each(data, (i, v)=> {
+				const endURI = encodeURIComponent(v.movfspath);
+				epList = epList + F1 + F2 + endURI + F3 + v.title + F4;
+			})
+			$('#tvshowList').append(epList);
+		})
+	})
+
+	$('.sttvSBtn').click(() => {
+		$('#sttvModal').modal('hide');
+		const season = $(this).attr("data-season");
+		$('#tvshowList').empty();
+		$.get("intSTTV", {
+			"season": season
+		},
+		(data)=> {
+			let epList = "";
+			$.each(data, (i, v) => {
+				const endURI = encodeURIComponent(v.movfspath);
+				epList = epList + F1 + F2 + endURI + F3 + v.title + F4;
+			})
+			$('#tvshowList').append(epList);
+		})
+	})
+
+	$('.nextgenerationSBtn').click(() => {
+		$('#nextgenerationModal').modal('hide');
+		const season = $(this).attr("data-season");
+		$('#tvshowList').empty();
+		$.get("intTNG", {
+			"season": season
+		},
+		(data)=> {
+			let epList = "";
+			$.each(data, (i, v)=> {
+				const endURI = encodeURIComponent(v.movfspath);
+				epList = epList + F1 + F2 + endURI + F3 + v.title + F4;
+			})
+			$('#tvshowList').append(epList);
+		})
+	})
+
+	$('.enterpriseSBtn').click(() => {
+		$('#enterpriseModal').modal('hide');
+		const season = $(this).attr("data-season");
+		$('#tvshowList').empty();
+		$.get("intEnterprise", {
+			"season": season
+		},
+		(data)=> {
+			let epList = "";
+			$.each(data, (i, v)=> {
+				const endURI = encodeURIComponent(v.movfspath);
+				epList = epList + F1 + F2 + endURI + F3 + v.title + F4;
+			})
+			$('#tvshowList').append(epList);
+		})
+	})
+
+	$('.discoverySBtn').click(() => {
+		$('#discoveryModal').modal('hide');
+		const season = $(this).attr("data-season");
+		$('#tvshowList').empty();
+		$.get("intDiscovery", {
+			"season": season
+		},
+		(data)=> {
+			let epList = "";
+			$.each(data, (i, v)=> {
+				const endURI = encodeURIComponent(v.movfspath);
+				epList = epList + F1 + F2 + endURI + F3 + v.title + F4;
+			})
+			$('#tvshowList').append(epList);
+		})
+	})
+
+	$('.voyagerSBtn').click(() => {
+		$('#voyagerModal').modal('hide');
+		const season = $(this).attr("data-season");
+		$('#tvshowList').empty();
+		$.get("intVoyager", {
+			"season": season
+		},
+		(data)=> {
+			let epList = "";
+			$.each(data, (i, v)=> {
+				const endURI = encodeURIComponent(v.movfspath);
+				epList = epList + F1 + F2 + endURI + F3 + v.title + F4;
+			})
+			$('#tvshowList').append(epList);
+		})
+	})
+
+	$('.lastshipSBtn').click(() => {
+		$('#lastshipModal').modal('hide');
+		const season = $(this).attr("data-season");
+		$('#tvshowList').empty();
+		$.get("intLastShip", {
+			"season": season
+		},
+		(data)=> {
+			let epList = "";
+			$.each(data, (i, v)=> {
+				const endURI = encodeURIComponent(v.movfspath);
+				epList = epList + F1 + F2 + endURI + F3 + v.title + F4;
+			})
+			$('#tvshowList').append(epList);
+		})
+	})
+
+	$('.prevBtn').click(() => {
+		$.ajax(
+			{
+				"url": OmxPrev,
+				"method": "GET",
+				'cache': false,
+				'dataType': "jsonp",
+				"async": true,
+				"crossDomain": true,
+				"headers": {
+					"accept": "text/html",
+					"Access-Control-Allow-Origin": "*",
+					"X-Content-Type-Options": "nosniff",
+				},
+			}
+		)
+	})
+
+	$('#prevChapterBtn').click(() => {
+		$.ajax(
+			{
+				"url": OmxPrev_chapter,
+				"method": "GET",
+				'cache': false,
+				'dataType': "jsonp",
+				"async": true,
+				"crossDomain": true,
+				"headers": {
+					"accept": "text/html",
+					"Access-Control-Allow-Origin": "*",
+					"X-Content-Type-Options": "nosniff",
+				},
+			}
+		)
+	})
+
+	$('#nextBtn').click(() => {
+		$.ajax(
+			{
+				"url": OmxNext,
+				"method": "GET",
+				'cache': false,
+				'dataType': "jsonp",
+				"async": true,
+				"crossDomain": true,
+				"headers": {
+					"accept": "text/html",
+					"Access-Control-Allow-Origin": "*",
+					"X-Content-Type-Options": "nosniff",
+				},
+			}
+		)
+	})
+
+	$('#nextChapterBtn').click(() => {
+		$.ajax(
+			{
+				"url": OmxNext_chapter,
+				"method": "GET",
+				'cache': false,
+				'dataType': "jsonp",
+				"async": true,
+				"crossDomain": true,
+				"headers": {
+					"accept": "text/html",
+					"Access-Control-Allow-Origin": "*",
+					"X-Content-Type-Options": "nosniff",
+				},
+			}
+		)
+	})
+
+	$('#playBtn').click(() => {
+		let bval = $('#playBtn').text();
+		if ( bval === "Pause") {
+			$('#playBtn').html("Play");
+		} else {
+			$('#playBtn').html("Pause");
 		}
-	})	
-})
-.on('click', '.main', function() {
-	$('#movies').collapse("hide");
-	$("#moviesGroup").collapse("hide");
-	$('#mainContainer').empty();
-})
-.on('click', '#catagoriesBtn', function() {
-	$('#moviesGroup').collapse("hide");
-})
-.on('click', '#groupsBtn', function() {
-	$('#movies').collapse("hide");
-})
-.on('click', '.tvshowLBtn', function() {
-	let tvshow = decodeURIComponent($(this).attr("data-filepath"));
-	$.ajax({
-		"url": omxplayer_server_playmedia,
-		"method": "GET",
-		'cache': false,
-		'dataType': "jsonp",
-		"async": true,
-		"crossDomain": true,
-		"data": {
-			"movie": tvshow,
-		},
-		"headers": {
-			"accept": "text/html",
-			"Access-Control-Allow-Origin": "*",
-			"X-Content-Type-Options": "nosniff",
-		},
+		$.ajax(
+			{
+				"url": OmxPlay,
+				"method": "GET",
+				'cache': true,
+				"async": true,
+				"crossDomain": true,
+				"headers": {
+					"accept": "text/html",
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "text/html",
+				},
+			}
+		)
 	})
-})
-.on("click", ".orvilleSBtn", function() {
-	let season = $(this).attr("data-season");
-	$('#orvilleModal').modal('hide');
-	$('#tvshowList').empty();
-	$.get("intOrville", {
-		"season": season
-	},
-	(data)=> {
-		epiFunc(data);
+
+	$('#stopBtn').click(() => {
+		$.ajax(
+			{
+				"url": OmxStop,
+				"method": "GET",
+				'cache': false,
+				'dataType': "jsonp",
+				"async": true,
+				"crossDomain": true,
+				"headers": {
+					"accept": "text/html",
+					"Access-Control-Allow-Origin": "*",
+					"X-Content-Type-Options": "nosniff",
+				},
+			}
+		)
 	})
-})
-.on('click', '.sttvSBtn', function () {
-	let season = $(this).attr("data-season");
-	$('#sttvModal').modal('hide');
-	$('#tvshowList').empty();
-	$.get("intSTTV", {
-		"season": season
-	},
-	(data)=> {
-		epiFunc(data);
-	})
-})
-.on('click', '.nextgenerationSBtn', function() {
-	const season = $(this).attr("data-season");
-	$('#nextgenerationModal').modal('hide');
-	$('#tvshowList').empty();
-	$.get("intTNG", {
-		"season": season
-	},
-	(data)=> {
-		epiFunc(data);
-	})
-})
-.on('click', '.enterpriseSBtn', function() {
-	let season = $(this).attr("data-season");
-	$('#enterpriseModal').modal('hide');
-	$('#tvshowList').empty();
-	$.get("intEnterprise", {
-		"season": season
-	},
-	(data)=> {
-		epiFunc(data);
-	})
-})
-.on('click', '.discoverySBtn', function() {
-	let season = $(this).attr("data-season");
-	$('#discoveryModal').modal('hide');
-	$('#tvshowList').empty();
-	$.get("intDiscovery", {
-		"season": season
-	},
-	(data)=> {
-		epiFunc(data);
-	})
-})
-.on('click', '.voyagerSBtn', function() {
-	let season = $(this).attr("data-season")
-	$('#voyagerModal').modal('hide');
-	$('#tvshowList').empty();
-	$.get("intVoyager", {
-		"season": season
-	},
-	(data)=> {
-		epiFunc(data);
-	})
-})
-.on('click', '.lastshipSBtn', function() {
-	let season = $(this).attr("data-season")
-	$('#lastshipModal').modal('hide');
-	$('#tvshowList').empty();
-	$.get("intLastShip", {
-		"season": season
-	},
-	(data)=> {
-		epiFunc(data);
-	})
-})
-.on('click', '#prevBtn', function() {
-	myAjax(omxplayer_server_prev);
-})
-.on('click', '#prevChapterBtn', function() {
-	myAjax(omxplayer_server_prev_chapter);
-})
-.on('click', '#nextBtn', function() {
-	myAjax(omxplayer_server_next);
-})
-.on('click', '#nextChapterBtn', function() {
-	myAjax(omxplayer_server_next_chapter);
-})
-.on('click', '#playBtn', function() {
-	let bval = $('#playBtn').text();
-	if ( bval === "Pause") {
-		$('#playBtn').html("Play");
-	} else {
-		$('#playBtn').html("Pause");
-	}
-	myAjax(omxplayer_server_play);
-})
-.on('click', '#stopBtn', function() {
-	myAjax(omxplayer_server_stop);
 });
