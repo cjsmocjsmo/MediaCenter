@@ -24,10 +24,12 @@ import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
 	tvgolib "tvgobs/tvgobslib"
+
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/gorilla/mux"
@@ -71,6 +73,7 @@ func intSTTVHandler(w http.ResponseWriter, r *http.Request) {
 	if errG != nil {
 		fmt.Println(errG)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -97,6 +100,7 @@ func intTNGHandler(w http.ResponseWriter, r *http.Request) {
 	if errG != nil {
 		fmt.Println(errG)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -123,6 +127,7 @@ func intEnterpriseHandler(w http.ResponseWriter, r *http.Request) {
 	if errG != nil {
 		fmt.Println(errG)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -149,6 +154,7 @@ func intDiscoveryHandler(w http.ResponseWriter, r *http.Request) {
 	if errG != nil {
 		fmt.Println(errG)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -175,6 +181,7 @@ func intVoyagerHandler(w http.ResponseWriter, r *http.Request) {
 	if errG != nil {
 		fmt.Println(errG)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -202,6 +209,7 @@ func intLastShipHandler(w http.ResponseWriter, r *http.Request) {
 	if errG != nil {
 		fmt.Println(errG)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -228,6 +236,7 @@ func intOrvilleHandler(w http.ResponseWriter, r *http.Request) {
 	if errG != nil {
 		fmt.Println(errG)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -245,7 +254,10 @@ func playMediaHandler(w http.ResponseWriter, r *http.Request) {
 	b1 := bson.M{"movfspath": mf}
 	b2 := bson.M{"_id": 0}
 	err = MTc.Find(b1).Select(b2).One(&MediaInfo)
-	omxAddr := os.Getenv("tvGOBS_OMXPLAYER_ADDRESS")
+	if err != nil {
+		fmt.Println(err)
+	}
+	omxAddr := os.Getenv("TVGOBS_OMXPLAYER_ADDRESS")
 	u, _ = url.Parse(omxAddr)
 	q, _ := url.ParseQuery(u.RawQuery)
 	q.Add("medPath", omxAddr)
@@ -261,6 +273,49 @@ func playMediaHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	Abody := string(body)
 	fmt.Println(Abody)
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(&MediaInfo)
+}
+
+func playMediaReactHandler(w http.ResponseWriter, r *http.Request) {
+	u, err := url.Parse(r.URL.String())
+	m, _ := url.ParseQuery(u.RawQuery)
+	mf := m["tvshow"][0]
+
+	ses := DBcon()
+	defer ses.Close()
+	var MediaInfo map[string]string
+	MTc := ses.DB("tvgobs").C("tvgobs")
+	b1 := bson.M{"movfspath": mf}
+	b2 := bson.M{"_id": 0}
+	err = MTc.Find(b1).Select(b2).One(&MediaInfo)
+	if err != nil {
+		log.Printf("this is playmedia err %s", err)
+	}
+
+
+	omxAddr := os.Getenv("TVGOBS_OMXPLAYER_ADDRESS")
+
+	u, _ = url.Parse(omxAddr)
+	q, _ := url.ParseQuery(u.RawQuery)
+	// q.Set("medPath", omxAddr)
+	q.Set("medPath", mf)
+	u.RawQuery = q.Encode()
+	log.Printf("this is u.string %s", u.String())
+	resp, err := http.Get(u.String())
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+	Abody := string(body)
+	fmt.Println(Abody)
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(&MediaInfo)
@@ -279,9 +334,45 @@ func UpdateHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("TVGOBS_SETUP environment variable is not set, starting SETUP")
 		exitstatus = tvgolib.SetUp()
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(exitstatus)
+}
+
+//DropTVDataBaseHandler is crap
+func DropTVDataBaseHandler(w http.ResponseWriter, r *http.Request) {
+	sess := DBcon()
+	err := sess.DB("tvgobs").DropDatabase()
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+//TVDBCountHandler bla bla
+func TVDBCountHandler(w http.ResponseWriter, r *http.Request) {
+	ses := DBcon()
+	foo, err := ses.DB("tvgobs").C("tvgobs").Count()
+	if err != nil {
+		w.Header().Set("Access-Control-Allow-Headers", "*")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(-0)
+		log.Println(err)
+	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(foo)
+}
+
+//TVSetupStatusHandler bla bla
+func TVSetupStatusHandler(w http.ResponseWriter, r *http.Request) {
+	status := os.Getenv("TVGOBS_SETUP")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(status)
 }
 
 func main() {
@@ -296,7 +387,12 @@ func main() {
 	r.HandleFunc("/intOrville", intOrvilleHandler)
 	r.HandleFunc("/intVoyager", intVoyagerHandler)
 	r.HandleFunc("/playMedia", playMediaHandler)
+	r.HandleFunc("/playMediaReact", playMediaReactHandler)
 	r.HandleFunc("/Update", UpdateHandler)
+	r.HandleFunc("/DropTVDataBase", DropTVDataBaseHandler)
+	r.HandleFunc("/TVDBCount", TVDBCountHandler)
+
+	r.HandleFunc("/TVSetupStatus", TVSetupStatusHandler)
 	s.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir(""))))
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("/media/"))))
 	http.ListenAndServe(":9999", (r))

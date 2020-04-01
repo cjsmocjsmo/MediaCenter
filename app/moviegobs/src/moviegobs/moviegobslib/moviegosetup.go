@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"time"
-
+	"strings"
 	"github.com/globalsign/mgo"
 )
 
@@ -56,6 +56,26 @@ func processMovs(pAth string) {
 	return
 }
 
+// func processTVShow(pAth string) {
+// 	log.Println("Process_Movs has started")
+// 	var tvpicpath string
+// 	tvpicpath = FindPicPaths(pAth, os.Getenv("MOVIEGOBS_NO_ART_PIC_PATH"))
+
+
+// 	var TVShowI tVShowInfoS
+// 	TVShowI = getTvShowInfo(pAth, tvpicpath)
+
+	
+// 	ses := DBcon()
+// 	defer ses.Close()
+// 	MTc := ses.DB("moviegobs").C("tvshows")
+// 	err := MTc.Insert(&TVShowI)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	return
+// }
+
 func posterdirVisit(posterpath string, f os.FileInfo, err error) error {
 	ext := filepath.Ext(posterpath)
 	if err != nil {
@@ -66,6 +86,9 @@ func posterdirVisit(posterpath string, f os.FileInfo, err error) error {
 		log.Println("fi its a dir")
 	} else if ext == ".txt" {
 		log.Println("its a txt file")
+	} else if strings.Contains(posterpath, "TVShows") {
+		log.Println("starting createtvshowthumbnail")
+		// CreateTVShowsThumbnail(posterpath)
 	} else {
 		log.Println("starting createmoviesthumbnail")
 		CreateMoviesThumbnail(posterpath)
@@ -75,7 +98,8 @@ func posterdirVisit(posterpath string, f os.FileInfo, err error) error {
 
 func genMatch(patH string, mtv bool) {
 	if mtv {
-		//Process_tvshow_info(patH)
+		fmt.Println(patH)
+		// processTVShow(patH)
 	} else {
 		processMovs(patH)
 	}
@@ -130,6 +154,7 @@ func SetUp() (ExStat int) {
 	empty, err := isDirEmpty("./static/images/thumbnails")
 	if empty {
 		filepath.Walk(os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"), posterdirVisit)
+		// filepath.Walk(os.Getenv("MOVIEGOBS_HARDRIVE_TVPOSTER_PATH"), posterdirVisit)
 	} else {
 		fmt.Println("thumb dir populated")
 	}

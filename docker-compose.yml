@@ -10,7 +10,7 @@ services:
       - 27017:27017
 
   app:
-    image: app:1.1
+    image: app:1.9
     build: ./app
     environment:
       - MOVIEGOBS_SETUP=1
@@ -24,7 +24,10 @@ services:
       - MOVIEGOBS_THUMB_BASE_PATH=./static/images/thumbnails
       - MOVIEGOBS_THUMBNAIL_PIC_PATH=./static/images/thumbnails
       - MOVIEGOBS_TEMPLATE_ADDRESS=./static/templates/moviegobs.template
-      - MOVIEGOBS_OMXPLAYER_ADDRESS="http://192.168.0.42"
+      - MOVIEGOBS_SERVER_PORT=8888
+      - MOVIEGOBS_SERVER_ADDRESS=http://192.168.0.42
+      - MOVIEGOBS_OMXPLAYER_ADDRESS=http://192.168.0.42:8181/OmxplayerPlayMedia
+      - MOVIEGOBS_OMXPLAYER_ADDRESS_REACT=http://192.168.0.42:8181/OmxplayerPlayMediaReact
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=example
     networks:
@@ -37,7 +40,7 @@ services:
       - db
 
   tvapp:
-    image: tvapp:1.1
+    image: tvapp:1.9
     build: ./tvapp
     environment:
       - TVGOBS_SETUP=1
@@ -45,9 +48,10 @@ services:
       - TVGOBS_MONGODB_THUMB_ADDRESS=mongodb://db:27017/tvbsthumb
       - TVGOBS_LOG=./logs/tvgobs_log.txt
       - TVGOBS_TVSHOWS_PATH=/root/fsData/TVShows
+      - TVGOBS_HARDRIVE_TVPOSTER_PATH=/root/fsData/TVPosters
       - TVGOBS_NO_ART_PIC_PATH=./static/images/animals.jpg
       - TVGOBS_TEMPLATE_ADDRESS=./static/templates/tvgobs.template
-      - TVGOBS_OMXPLAYER_ADDRESS="http://192.168.0.42"
+      - TVGOBS_OMXPLAYER_ADDRESS=http://192.168.0.42:8181/OmxplayerPlayMediaReact
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=example
     networks:

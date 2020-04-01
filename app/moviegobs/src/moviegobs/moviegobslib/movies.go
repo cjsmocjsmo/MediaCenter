@@ -36,7 +36,7 @@ func getMovieYear(apath string) (movyr string) {
 
 //MOVI is exported because I want it so
 type MOVI struct {
-	Id             bson.ObjectId `bson:"_id,omitempty"`
+	ID             bson.ObjectId `bson:"_id,omitempty"`
 	DirPath        string        `bson:"dirpath"`
 	Filepath       string        `bson:"filepath"`
 	MediaID        string        `bson:"mediaid"`
@@ -55,7 +55,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 	switch {
 	case strings.Contains(apath, "SciFi"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -69,7 +69,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "Cartoons"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -83,7 +83,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "Godzilla"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -97,7 +97,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "Kingsman"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -111,7 +111,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "StarTrek") && !strings.Contains(apath, " STTV "):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -125,7 +125,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "StarWars"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -139,7 +139,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "SuperHeros"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -153,7 +153,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "IndianaJones"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -167,7 +167,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "Action"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -181,7 +181,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "Comedy"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -195,7 +195,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "Drama"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -209,7 +209,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "JurassicPark"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -223,7 +223,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "JohnWayne"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -237,7 +237,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "JohnWick"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -251,7 +251,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "MenInBlack"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -265,7 +265,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "HarryPotter"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -279,7 +279,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "Tremors"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -293,7 +293,7 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 		}
 	case strings.Contains(apath, "Misc"):
 		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{Id: bson.NewObjectId(),
+		MovInfo = MOVI{ID: bson.NewObjectId(),
 			DirPath:   dirp,
 			Filepath:  apath,
 			MediaID:   moviesUUID(),
@@ -326,7 +326,7 @@ func moviesUUID() (UUID string) {
 	var Mov_catagory string = get_MOVIe_cat(apath)
 	var Mov_picpath string = MOVIegolib.FindPicPaths(pAth, NO_ART_PIC_PATH)
 	var movpicInfo string = MOVIegolib.CreatemoviesThumbnail(Mov_picpath)
-	MovInfo = MOVI{Id: bson.NewObjectId(),
+	MovInfo = MOVI{ID: bson.NewObjectId(),
 		DirPath: dirp,
 		Filepath: pAth,
 		MediaID: moviesUUID(),

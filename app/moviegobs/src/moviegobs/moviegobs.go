@@ -62,10 +62,12 @@ func intActionHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
 	json.NewEncoder(w).Encode(ActionMedia)
+	log.Println(ActionMedia)
 }
 
 func intCartoonsHandler(w http.ResponseWriter, r *http.Request) {
@@ -79,6 +81,7 @@ func intCartoonsHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -96,6 +99,7 @@ func intComedyHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -113,6 +117,7 @@ func intDramaHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -130,6 +135,7 @@ func intGodzillaHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -147,6 +153,7 @@ func intIndianaJonesHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -164,6 +171,7 @@ func intJohnWayneHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -181,6 +189,7 @@ func intJurassicParkHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -198,6 +207,7 @@ func intKingsManHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -215,6 +225,7 @@ func intHarryPotterHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -232,6 +243,7 @@ func intMenInBlackHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -249,6 +261,7 @@ func intMiscHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -267,6 +280,7 @@ func intSciFiHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("this is a database lookup error for the InitSciFiHandler function")
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -284,6 +298,7 @@ func intStarTrekHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -301,6 +316,7 @@ func intStarWarsHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -318,6 +334,7 @@ func intSuperHerosHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -335,6 +352,7 @@ func intTremorsHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
@@ -373,13 +391,45 @@ func playMediaHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 	Abody := string(body)
-	fmt.Println(Abody)
-	fmt.Printf("this is mediainfo sent to browser: %s", MediaInfo)
-	log.Printf("this is mediainfo filepath: %s", MediaInfo)
-	log.Println("Sending info to omxplayer server")
+	fmt.Printf("this is mediainfo sent to browser: %s", Abody)
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(&MediaInfo)
+}
+
+func playMediaReactHandler(w http.ResponseWriter, r *http.Request) {
+	u, err := url.Parse(r.URL.String())
+	if err != nil {
+		fmt.Println(err)
+	}
+	m, _ := url.ParseQuery(u.RawQuery)
+	mf := m["movie"]
+	omxAddr := os.Getenv("MOVIEGOBS_OMXPLAYER_ADDRESS_REACT")
+	u, _ = url.Parse(omxAddr)
+	q, _ := url.ParseQuery(u.RawQuery)
+	// q.Add("medPath", omxAddr)
+	q.Add("medPath", mf[0])
+	u.RawQuery = q.Encode()
+
+	log.Println("this is u.String()")
+	log.Println(u.String())
+
+	resp, err := http.Get(u.String())
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+	Abody := string(body)
+	fmt.Println(Abody)
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(mf)
 }
 
 //UpdateHandler updates the db with newly added music
@@ -407,9 +457,39 @@ func UpdateHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("MOVIEGOBS_SETUP environment variable is not set, starting SETUP")
 		exitstatus = moviegolib.SetUp()
 	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(exitstatus)
+}
+
+//MovDBCountHandler bla bla
+func MovDBCountHandler(w http.ResponseWriter, r *http.Request) {
+	ses := dBcon()
+	defer ses.Close()
+	MTc := ses.DB("moviegobs").C("moviegobs")
+	foo, err := MTc.Count()
+	if err != nil {
+		w.Header().Set("Access-Control-Allow-Headers", "*")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(0)
+		log.Println(err)
+	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(foo)
+
+}
+
+//MovSetupVariableHandler bla bla
+func MovSetupVariableHandler(w http.ResponseWriter, r *http.Request) {
+	status := os.Getenv("MOVIEGOBS_SETUP")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(status)
 }
 
 func main() {
@@ -434,6 +514,9 @@ func main() {
 	r.HandleFunc("/intSuperHeros", intSuperHerosHandler)
 	r.HandleFunc("/intTremors", intTremorsHandler)
 	r.HandleFunc("/playMedia", playMediaHandler)
+	r.HandleFunc("/playMediaReact", playMediaReactHandler)
+	r.HandleFunc("/MovDBCount", MovDBCountHandler)
+	r.HandleFunc("/MovSetupVariable", MovSetupVariableHandler)
 	r.HandleFunc("/Update", UpdateHandler)
 	s.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir(""))))
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("/media/"))))

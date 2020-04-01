@@ -1,18 +1,18 @@
 package moviegolib
 
 import (
-	"fmt"
+	// "fmt"
 	"time"
 	"math/rand"
 	"path"
 	"strings"
 	"strconv"
-	"gopkg.in/mgo.v2"
+	// "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
-type tvShowInfoS struct {
-	Id bson.ObjectId `bson:"_id,omitempty"`
+type tVShowInfoS struct {
+	ID bson.ObjectId `bson:"_id,omitempty"`
 	FilePath string `bson:"filepath"`
 	Catagory string `bson:"catagory"`
 	MediaID string `bson:"MediaID"`
@@ -25,22 +25,22 @@ type tvShowInfoS struct {
 	ThumbPath string `bson:"thumbpath"`
 }
 
-func tvshowsDBcon() *mgo.Session {
-	s, err := mgo.Dial("127.0.0.1")
-//	s, err := mgo.Dial("mongodb://192.168.1.101:27017")
-	if err != nil {
-		fmt.Println("this is dial err")
-		panic(err)
-	}
-	return s
-}
-
-func getTvShowInfo(apath string, tvshowpicPath string, tvshowpicInfo string) (TvSI tvShowInfoS) {
+// func tvshowsDBcon() *mgo.Session {
+// 	s, err := mgo.Dial("127.0.0.1")
+// //	s, err := mgo.Dial("mongodb://192.168.1.101:27017")
+// 	if err != nil {
+// 		fmt.Println("this is dial err")
+// 		panic(err)
+// 	}
+// 	return s
+// }
+func getTvShowInfo(apath string, tvshowpicPath string) (TvSI tVShowInfoS) {
+//func getTvShowInfo(apath string, tvshowpicPath string, tvshowpicInfo string) (TvSI tVShowInfoS) {
 	switch {
 		case strings.Contains(apath, "TVShows/TNG"):
 			_, filename := path.Split(apath)
 			var boo = len(filename) - 4
-			TvSI = tvShowInfoS{Id: bson.NewObjectId(),
+			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
 				FilePath: apath,
 				Catagory: "TNG",
 				MediaID: tvshowsUUID(),
@@ -50,12 +50,12 @@ func getTvShowInfo(apath string, tvshowpicPath string, tvshowpicInfo string) (Tv
 				Title: filename[21:boo],
 				Series: filename[21:boo],
 				TVShowPicPath: tvshowpicPath,
-				ThumbPath: tvshowpicInfo,
+				//ThumbPath: tvshowpicInfo,
 			}
 		case strings.Contains(apath, " STTV "):
 			_, filename := path.Split(apath)
 			var boo = len(filename) - 4
-			TvSI = tvShowInfoS{Id: bson.NewObjectId(),
+			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
 				FilePath: apath,
 				Catagory: "STTV",
 				MediaID: tvshowsUUID(),
@@ -65,12 +65,12 @@ func getTvShowInfo(apath string, tvshowpicPath string, tvshowpicInfo string) (Tv
 				Title: filename[21:boo],
 				Series: "Star Trek",
 				TVShowPicPath: tvshowpicPath,
-				ThumbPath: tvshowpicInfo,
+				//ThumbPath: tvshowpicInfo,
 			}
 		case strings.Contains(apath, "The Orville"):
 			_, filename := path.Split(apath)
 			var boo = len(filename) - 4
-			TvSI = tvShowInfoS{Id: bson.NewObjectId(),
+			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
 				FilePath: apath,
 				Catagory: "The Orville",
 				MediaID: tvshowsUUID(),
@@ -80,12 +80,12 @@ func getTvShowInfo(apath string, tvshowpicPath string, tvshowpicInfo string) (Tv
 				Title: filename[19:boo],
 				Series: "The Orville",
 				TVShowPicPath: tvshowpicPath,
-				ThumbPath: tvshowpicInfo,
+				//ThumbPath: tvshowpicInfo,
 			}
 		case strings.Contains(apath, "Voyager"):
 			_, filename := path.Split(apath)
 			var boo = len(filename) - 4
-			TvSI = tvShowInfoS{Id: bson.NewObjectId(),
+			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
 				FilePath: apath,
 				Catagory: "Voyager",
 				MediaID: tvshowsUUID(),
@@ -95,12 +95,12 @@ func getTvShowInfo(apath string, tvshowpicPath string, tvshowpicInfo string) (Tv
 				Title: filename[24:boo],
 				Series: "Voyager",
 				TVShowPicPath: tvshowpicPath,
-				ThumbPath: tvshowpicInfo,
+				//ThumbPath: tvshowpicInfo,
 			}
 		case strings.Contains(apath, "Discovery"):
 			_, filename := path.Split(apath)
 			var boo = len(filename) - 4
-			TvSI = tvShowInfoS{Id: bson.NewObjectId(),
+			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
 				FilePath: apath,
 				Catagory: "Discovery",
 				MediaID: tvshowsUUID(),
@@ -110,12 +110,12 @@ func getTvShowInfo(apath string, tvshowpicPath string, tvshowpicInfo string) (Tv
 				Title: filename[27:boo],
 				Series: "Discovery",
 				TVShowPicPath: tvshowpicPath,
-				ThumbPath: tvshowpicInfo,
+				//ThumbPath: tvshowpicInfo,
 			}
 		case strings.Contains(apath, "ENT"):
 			_, filename := path.Split(apath)
 			var boo = len(filename) - 4
-			TvSI = tvShowInfoS{Id: bson.NewObjectId(),
+			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
 				FilePath: apath,
 				Catagory: "Enterprise",
 				MediaID: tvshowsUUID(),
@@ -125,12 +125,12 @@ func getTvShowInfo(apath string, tvshowpicPath string, tvshowpicInfo string) (Tv
 				Title: filename[20:boo],
 				Series: "Enterprise",
 				TVShowPicPath: tvshowpicPath,
-				ThumbPath: tvshowpicInfo,
+				//ThumbPath: tvshowpicInfo,
 			}
 		case strings.Contains(apath, "The Last Ship"):
 			_, filename := path.Split(apath)
 			var boo = len(filename) - 4
-			TvSI = tvShowInfoS{Id: bson.NewObjectId(),
+			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
 				FilePath: apath,
 				Catagory: "The Last Ship",
 				MediaID: tvshowsUUID(),
@@ -140,7 +140,7 @@ func getTvShowInfo(apath string, tvshowpicPath string, tvshowpicInfo string) (Tv
 				Title: filename[21:boo],
 				Series: "The Last Ship",
 				TVShowPicPath: tvshowpicPath,
-				ThumbPath: tvshowpicInfo,
+				//ThumbPath: tvshowpicInfo,
 			}
 	}
 	return
