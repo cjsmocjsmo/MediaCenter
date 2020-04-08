@@ -23,7 +23,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"io"
 	"io/ioutil"
 	"log"
 	moviegolib "moviegobs/moviegobslib"
@@ -67,7 +66,6 @@ func intActionHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
 	json.NewEncoder(w).Encode(ActionMedia)
-	log.Println(ActionMedia)
 }
 
 func intCartoonsHandler(w http.ResponseWriter, r *http.Request) {
@@ -408,7 +406,6 @@ func playMediaReactHandler(w http.ResponseWriter, r *http.Request) {
 	omxAddr := os.Getenv("MOVIEGOBS_OMXPLAYER_ADDRESS_REACT")
 	u, _ = url.Parse(omxAddr)
 	q, _ := url.ParseQuery(u.RawQuery)
-	// q.Add("medPath", omxAddr)
 	q.Add("medPath", mf[0])
 	u.RawQuery = q.Encode()
 
@@ -434,24 +431,12 @@ func playMediaReactHandler(w http.ResponseWriter, r *http.Request) {
 
 //UpdateHandler updates the db with newly added music
 func UpdateHandler(w http.ResponseWriter, r *http.Request) {
-	j, err := os.OpenFile(os.Getenv("MOVIEGOBS_LOG"), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		log.Fatalf("error opening file: %v", err)
-	}
-	defer j.Close()
-	wrtupdate := io.MultiWriter(os.Stdout, j)
-	log.SetOutput(wrtupdate)
-
-	log.Println("UpdateHandler is starting")
 	val, _ := os.LookupEnv("MOVIEGOBS_SETUP")
-	fmt.Println("this is moviegosetup val")
-	fmt.Println(val)
 	var exitstatus int
 	if val == "0" {
 		fmt.Println("Ok is Ok")
 		log.Println("MOVIEGOBS_SETUP environment variable is set, starting MOVIEGO")
 		exitstatus = 0
-
 	} else {
 		fmt.Println("not OK")
 		log.Println("MOVIEGOBS_SETUP environment variable is not set, starting SETUP")
@@ -480,7 +465,6 @@ func MovDBCountHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(foo)
-
 }
 
 //MovSetupVariableHandler bla bla

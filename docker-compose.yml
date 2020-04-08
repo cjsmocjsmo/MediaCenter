@@ -16,7 +16,6 @@ services:
       - MOVIEGOBS_SETUP=1
       - MOVIEGOBS_MONGODB_ADDRESS=mongodb://db:27017/moviegobs
       - MOVIEGOBS_MONGODB_THUMB_ADDRESS=mongodb://db:27017/movbsthumb
-      - MOVIEGOBS_LOG=./logs/MOVIEGOBS_log.txt
       - MOVIEGOBS_MOVIES_PATH=/root/fsData/Movies
       - MOVIEGOBS_TVSHOWS_PATH=/root/fsData/TVShows
       - MOVIEGOBS_HARDDRIVE_POSTERS_PATH=/root/fsData/Posters
