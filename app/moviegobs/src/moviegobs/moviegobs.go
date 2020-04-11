@@ -22,7 +22,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"html/template"
+	// "html/template"
 	"io/ioutil"
 	"log"
 	moviegolib "moviegobs/moviegobslib"
@@ -44,11 +44,11 @@ func dBcon() *mgo.Session {
 	return s
 }
 
-func showMovieGo(w http.ResponseWriter, r *http.Request) {
-	tmppath := os.Getenv("MOVIEGOBS_TEMPLATE_ADDRESS")
-	tmpl := template.Must(template.ParseFiles(tmppath))
-	tmpl.Execute(w, tmpl)
-}
+// func showMovieGo(w http.ResponseWriter, r *http.Request) {
+// 	tmppath := os.Getenv("MOVIEGOBS_TEMPLATE_ADDRESS")
+// 	tmpl := template.Must(template.ParseFiles(tmppath))
+// 	tmpl.Execute(w, tmpl)
+// }
 
 func intActionHandler(w http.ResponseWriter, r *http.Request) {
 	ses := dBcon()
@@ -479,7 +479,7 @@ func MovSetupVariableHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := mux.NewRouter()
 	s := r.PathPrefix("/static").Subrouter()
-	r.HandleFunc("/moviego", showMovieGo)
+	// r.HandleFunc("/moviego", showMovieGo)
 	r.HandleFunc("/intAction", intActionHandler)
 	r.HandleFunc("/intCartoons", intCartoonsHandler)
 	r.HandleFunc("/intComedy", intComedyHandler)
