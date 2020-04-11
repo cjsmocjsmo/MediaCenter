@@ -8,6 +8,8 @@ services:
       - tvgobs
     ports:
       - 27017:27017
+    volumes:
+      - mongo:/data/db
 
   app:
     image: app:1.9
@@ -67,6 +69,8 @@ networks:
   tvgobs:
 
 volumes:
+  mongo:
+
   moviegobsvol:
     driver: local
     driver_opts:
