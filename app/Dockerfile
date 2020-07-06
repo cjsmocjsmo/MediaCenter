@@ -9,7 +9,7 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 RUN mkdir ./static
 COPY --from=builder /go/main .
-COPY --from=builder /go/static ./static
+COPY --from=builder /go/src/static ./static
 RUN \
   mkdir ./fsData && \
   chmod -R +rwx ./fsData && \
