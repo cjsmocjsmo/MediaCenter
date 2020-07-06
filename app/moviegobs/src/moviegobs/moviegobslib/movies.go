@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -64,7 +63,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "SciFi",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "Cartoons"):
@@ -78,7 +76,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "Cartoons",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "Godzilla"):
@@ -92,7 +89,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "Godzilla",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "Kingsman"):
@@ -106,7 +102,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "Kingsman",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "StarTrek") && !strings.Contains(apath, " STTV "):
@@ -120,7 +115,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "StarTrek",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "StarWars"):
@@ -134,7 +128,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "StarWars",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "SuperHeros"):
@@ -148,7 +141,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "SuperHeros",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "IndianaJones"):
@@ -162,7 +154,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "IndianaJones",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "Action"):
@@ -176,7 +167,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "Action",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "Comedy"):
@@ -190,7 +180,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "Comedy",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "Drama"):
@@ -204,7 +193,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "Drama",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "JurassicPark"):
@@ -218,7 +206,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "JurassicPark",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "JohnWayne"):
@@ -232,7 +219,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "JohnWayne",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "JohnWick"):
@@ -246,7 +232,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "JohnWick",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "MenInBlack"):
@@ -260,7 +245,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "MenInBlack",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "HarryPotter"):
@@ -274,7 +258,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "HarryPotter",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "Tremors"):
@@ -288,7 +271,6 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "Tremors",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
 			MovYear: getMovieYear(apath),
 		}
 	case strings.Contains(apath, "Misc"):
@@ -302,7 +284,19 @@ func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			Catagory:  "Misc",
 			MovFSPath: filesystempath,
 			ThumbPath: movpicInfo,
-
+			MovYear: getMovieYear(apath),
+		}
+	case strings.Contains(apath, "Pirates"):
+		dirp, _ := path.Split(apath)
+		MovInfo = MOVI{ID: bson.NewObjectId(),
+			DirPath:   dirp,
+			Filepath:  apath,
+			MediaID:   moviesUUID(),
+			Movname:   getmovName(apath),
+			Genre:     "movies",
+			Catagory:  "Pirates",
+			MovFSPath: filesystempath,
+			ThumbPath: movpicInfo,
 			MovYear: getMovieYear(apath),
 		}
 	}
@@ -318,30 +312,3 @@ func moviesUUID() (UUID string) {
 	return p
 }
 
-/*func Get_MOVIe_info(pAth string) (MovInfo MOVI) {
-    dirp, movname1 := path.Split(apath)
-	var movname string = getmovName(movname1)
-    var movname string = Moname(Movname1)
-	var Mov_genre string = get_gen(apath)
-	var Mov_catagory string = get_MOVIe_cat(apath)
-	var Mov_picpath string = MOVIegolib.FindPicPaths(pAth, NO_ART_PIC_PATH)
-	var movpicInfo string = MOVIegolib.CreatemoviesThumbnail(Mov_picpath)
-	MovInfo = MOVI{ID: bson.NewObjectId(),
-		DirPath: dirp,
-		Filepath: pAth,
-		MediaID: moviesUUID(),
-		Movname: getmovName(apath),
-		Genre: get_gen(apath),
-		Catagory: Mov_catagory,
-		MovFSPath: filesystempath,
-		ThumbPath: movpicInfo,
-		MovYear: get_MOVIe_year(apath),
-	}
-    ses := DBcon()
-	defer ses.Close()
-	MTc := ses.DB("MOVIego").C("MOVIego")
-	err := MTc.Insert(&MovInfo)
-	if err != nil {
-		fmt.Println(err)
-	return
-}*/
