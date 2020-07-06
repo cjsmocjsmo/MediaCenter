@@ -22,7 +22,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	// "html/template"
 	"io/ioutil"
 	"log"
 	moviegolib "moviegobs/moviegobslib"
@@ -43,12 +42,6 @@ func dBcon() *mgo.Session {
 	log.Println("Session Connection to db established")
 	return s
 }
-
-// func showMovieGo(w http.ResponseWriter, r *http.Request) {
-// 	tmppath := os.Getenv("MOVIEGOBS_TEMPLATE_ADDRESS")
-// 	tmpl := template.Must(template.ParseFiles(tmppath))
-// 	tmpl.Execute(w, tmpl)
-// }
 
 func intActionHandler(w http.ResponseWriter, r *http.Request) {
 	ses := dBcon()
@@ -357,6 +350,55 @@ func intTremorsHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(TremorsMedia)
 }
 
+
+
+
+func intJohnWickHandler(w http.ResponseWriter, r *http.Request) {
+	ses := dBcon()
+	defer ses.Close()
+	MTc := ses.DB("moviegobs").C("moviegobs")
+	var JohnWickMedia []map[string]string
+	b1 := bson.M{"catagory": "JohnWick"}
+	b2 := bson.M{"_id": 0}
+	err := MTc.Find(b1).Select(b2).All(&JohnWickMedia)
+	if err != nil {
+		log.Println(err)
+	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Cache-Control", "max-age=370739520, public")
+	json.NewEncoder(w).Encode(JohnWickMedia)
+}
+
+func intPiratesHandler(w http.ResponseWriter, r *http.Request) {
+	ses := dBcon()
+	defer ses.Close()
+	MTc := ses.DB("moviegobs").C("moviegobs")
+	var PiratesMedia []map[string]string
+	b1 := bson.M{"catagory": "Pirates"}
+	b2 := bson.M{"_id": 0}
+	err := MTc.Find(b1).Select(b2).All(&PiratesMedia)
+	if err != nil {
+		log.Println(err)
+	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Cache-Control", "max-age=370739520, public")
+	json.NewEncoder(w).Encode(PiratesMedia)
+}
+
+
+
+
+
+
+
+
+
+
+
 func playMediaHandler(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.URL.String())
 	if err != nil {
@@ -479,7 +521,6 @@ func MovSetupVariableHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := mux.NewRouter()
 	s := r.PathPrefix("/static").Subrouter()
-	// r.HandleFunc("/moviego", showMovieGo)
 	r.HandleFunc("/intAction", intActionHandler)
 	r.HandleFunc("/intCartoons", intCartoonsHandler)
 	r.HandleFunc("/intComedy", intComedyHandler)
@@ -497,6 +538,8 @@ func main() {
 	r.HandleFunc("/intStarWars", intStarWarsHandler)
 	r.HandleFunc("/intSuperHeros", intSuperHerosHandler)
 	r.HandleFunc("/intTremors", intTremorsHandler)
+	r.HandleFunc("/intJohnWick", intJohnWickHandler)
+	r.HandleFunc("/intPirates", intPiratesHandler)
 	r.HandleFunc("/playMedia", playMediaHandler)
 	r.HandleFunc("/playMediaReact", playMediaReactHandler)
 	r.HandleFunc("/MovDBCount", MovDBCountHandler)
