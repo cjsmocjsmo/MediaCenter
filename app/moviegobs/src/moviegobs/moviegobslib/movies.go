@@ -48,7 +48,8 @@ type MOVI struct {
 	MovYear        string        `bson:"movyear"`
 }
 
-func getmovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
+// GetMovieInfo comment
+func GetMovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 	var filesystempath = "/media/pi/PiTB/media/" + apath[13:len(apath)]
 	fmt.Printf("THIS IS FILESYSTEMPATH  %s", filesystempath)
 	switch {

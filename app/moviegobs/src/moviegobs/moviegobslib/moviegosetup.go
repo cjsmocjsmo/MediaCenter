@@ -45,7 +45,7 @@ func processMovs(pAth string) {
 
 	movpicPath = FindPicPaths(pAth, os.Getenv("MOVIEGOBS_NO_ART_PIC_PATH"))
 	var MovI MOVI
-	MovI = getmovieInfo(pAth, movpicPath)
+	MovI = GetMovieInfo(pAth, movpicPath)
 	ses := DBcon()
 	defer ses.Close()
 	MTc := ses.DB("moviegobs").C("moviegobs")
