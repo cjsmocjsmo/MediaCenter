@@ -8,11 +8,11 @@ services:
       - tvgobs
     ports:
       - 27017:27017
-    volumes:
-      - mongovol:/data/db
+    # volumes:
+    #   - mongovol:/data/db
 
   app:
-    image: app:1.9
+    image: app:2.2
     build: ./app
     environment:
       - MOVIEGOBS_SETUP=1
@@ -41,7 +41,7 @@ services:
       - db
 
   tvapp:
-    image: tvapp:1.9
+    image: tvapp:2.2
     build: ./tvapp
     environment:
       - TVGOBS_SETUP=1
