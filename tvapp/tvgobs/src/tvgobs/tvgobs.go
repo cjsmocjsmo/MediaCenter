@@ -22,7 +22,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -44,12 +43,6 @@ func DBcon() *mgo.Session {
 	}
 	fmt.Println("Session Connection to db established")
 	return s
-}
-
-func showTVGo(w http.ResponseWriter, r *http.Request) {
-	tmppath := os.Getenv("TVGOBS_TEMPLATE_ADDRESS")
-	tmpl := template.Must(template.ParseFiles(tmppath))
-	tmpl.Execute(w, tmpl)
 }
 
 func intSTTVHandler(w http.ResponseWriter, r *http.Request) {
@@ -378,7 +371,6 @@ func TVSetupStatusHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := mux.NewRouter()
 	s := r.PathPrefix("/static").Subrouter()
-	r.HandleFunc("/tvgo", showTVGo)
 	r.HandleFunc("/intSTTV", intSTTVHandler)
 	r.HandleFunc("/intTNG", intTNGHandler)
 	r.HandleFunc("/intEnterprise", intEnterpriseHandler)
