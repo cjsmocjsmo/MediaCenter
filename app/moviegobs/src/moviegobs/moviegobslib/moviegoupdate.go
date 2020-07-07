@@ -1,7 +1,7 @@
 package moviegolib
 
 import (
-	// "fmt"
+	"fmt"
 	// "io"
 	"log"
 	// "os"
@@ -32,3 +32,14 @@ func nameInDbCheck(fn string) (result bool) {
 	return
 }
 
+//UpdateMain comment
+func UpdateMain(filename string) (finished bool) {
+	namecheck := nameInDbCheck(filename)
+	if namecheck {
+		fmt.Println("Movie already in DB")
+	} else {
+		picinfo := CreateMoviesThumbnail(filename)
+		GetMovieInfo(filename, picinfo.ThumbPath)
+	}
+	return true
+}

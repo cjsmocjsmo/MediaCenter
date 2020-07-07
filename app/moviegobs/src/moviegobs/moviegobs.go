@@ -390,7 +390,23 @@ func intPiratesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 
-
+func intDieHardHandler(w http.ResponseWriter, r *http.Request) {
+	ses := dBcon()
+	defer ses.Close()
+	MTc := ses.DB("moviegobs").C("moviegobs")
+	var DieHardMedia []map[string]string
+	b1 := bson.M{"catagory": "DieHard"}
+	b2 := bson.M{"_id": 0}
+	err := MTc.Find(b1).Select(b2).All(&DieHardMedia)
+	if err != nil {
+		log.Println(err)
+	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Cache-Control", "max-age=370739520, public")
+	json.NewEncoder(w).Encode(DieHardMedia)
+}
 
 
 
@@ -540,6 +556,7 @@ func main() {
 	r.HandleFunc("/intTremors", intTremorsHandler)
 	r.HandleFunc("/intJohnWick", intJohnWickHandler)
 	r.HandleFunc("/intPirates", intPiratesHandler)
+	r.HandleFunc("/intDieHard", intDieHardHandler)
 	r.HandleFunc("/playMedia", playMediaHandler)
 	r.HandleFunc("/playMediaReact", playMediaReactHandler)
 	r.HandleFunc("/MovDBCount", MovDBCountHandler)

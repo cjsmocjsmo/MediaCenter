@@ -287,6 +287,19 @@ func GetMovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
 			ThumbPath: movpicInfo,
 			MovYear: getMovieYear(apath),
 		}
+	case strings.Contains(apath, "DieHard"):
+		dirp, _ := path.Split(apath)
+		MovInfo = MOVI{ID: bson.NewObjectId(),
+			DirPath:   dirp,
+			Filepath:  apath,
+			MediaID:   moviesUUID(),
+			Movname:   getmovName(apath),
+			Genre:     "movies",
+			Catagory:  "DieHard",
+			MovFSPath: filesystempath,
+			ThumbPath: movpicInfo,
+			MovYear: getMovieYear(apath),
+		}
 	case strings.Contains(apath, "Pirates"):
 		dirp, _ := path.Split(apath)
 		MovInfo = MOVI{ID: bson.NewObjectId(),
