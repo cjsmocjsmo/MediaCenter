@@ -251,7 +251,7 @@ func intLostInSpaceHandler(w http.ResponseWriter, r *http.Request) {
 	defer ses.Close()
 	MTtc := ses.DB("tvgobs").C("tvgobs")
 	var LostInSpaceMedia []map[string]string
-	b1 := bson.M{"catagory": "LostInSpace", "season": s1}
+	b1 := bson.M{"catagory": "Lost In Space", "season": s1}
 	b2 := bson.M{"_id": 0}
 	errG := MTtc.Find(b1).Select(b2).All(&LostInSpaceMedia)
 	if errG != nil {
