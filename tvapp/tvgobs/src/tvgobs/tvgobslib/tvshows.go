@@ -155,6 +155,22 @@ func getTvShowInfo(apath string, tvshowpicPath string) (TvSI TvShowInfoS) {
 			MovFSPath:     filesystempath,
 			//ThumbPath: tvshowpicInfo,
 		}
+	case strings.Contains(apath, "Lost In Space"):
+		_, filename := path.Split(apath)
+		var boo = len(filename) - 4
+		TvSI = TvShowInfoS{ID: bson.NewObjectId(),
+			FilePath:      apath,
+			Catagory:      "Lost In Space",
+			MediaID:       tvshowsUUID(),
+			Genre:         "TVShows",
+			Season:        filename[15:17],
+			Episode:       filename[18:20],
+			Title:         filename[21:boo],
+			Series:        "Lost In Space",
+			TVShowPicPath: tvshowpicPath,
+			MovFSPath:     filesystempath,
+			//ThumbPath: tvshowpicInfo,
+		}
 	}
 	return
 }

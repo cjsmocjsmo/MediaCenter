@@ -236,6 +236,46 @@ func intOrvilleHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&OrvilleMedia)
 }
 
+
+func intLostInSpaceHandler(w http.ResponseWriter, r *http.Request) {
+	u, err := url.Parse(r.URL.String())
+	if err != nil {
+		fmt.Println(err)
+	}
+	m, eff := url.ParseQuery(u.RawQuery)
+	if eff != nil {
+		fmt.Println(eff)
+	}
+	s1 := m["season"][0]
+	ses := DBcon()
+	defer ses.Close()
+	MTtc := ses.DB("tvgobs").C("tvgobs")
+	var LostInSpaceMedia []map[string]string
+	b1 := bson.M{"catagory": "LostInSpace", "season": s1}
+	b2 := bson.M{"_id": 0}
+	errG := MTtc.Find(b1).Select(b2).All(&LostInSpaceMedia)
+	if errG != nil {
+		fmt.Println(errG)
+	}
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Cache-Control", "max-age=370739520, public")
+	json.NewEncoder(w).Encode(&LostInSpaceMedia)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 func playMediaHandler(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.URL.String())
 	m, _ := url.ParseQuery(u.RawQuery)
@@ -377,6 +417,7 @@ func main() {
 	r.HandleFunc("/intDiscovery", intDiscoveryHandler)
 	r.HandleFunc("/intLastShip", intLastShipHandler)
 	r.HandleFunc("/intOrville", intOrvilleHandler)
+	r.HandleFunc("/intLostInSpace", intLostInSpaceHandler)
 	r.HandleFunc("/intVoyager", intVoyagerHandler)
 	r.HandleFunc("/playMedia", playMediaHandler)
 	r.HandleFunc("/playMediaReact", playMediaReactHandler)

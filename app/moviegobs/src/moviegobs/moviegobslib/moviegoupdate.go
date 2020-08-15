@@ -33,7 +33,12 @@ func nameInDbCheck(fn string) (result bool) {
 }
 
 //UpdateMain comment
-func UpdateMain(filename string) (finished bool) {
+// add dir counts at setup time
+// get dir list
+// glob each dir for count
+// check count in database from setup
+
+func updateMain(filename string) (finished bool) {
 	namecheck := nameInDbCheck(filename)
 	if namecheck {
 		fmt.Println("Movie already in DB")
