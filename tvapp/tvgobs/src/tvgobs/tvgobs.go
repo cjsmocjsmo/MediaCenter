@@ -257,6 +257,7 @@ func intLostInSpaceHandler(w http.ResponseWriter, r *http.Request) {
 	if errG != nil {
 		fmt.Println(errG)
 	}
+	fmt.Println(&LostInSpaceMedia)
 	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
