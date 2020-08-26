@@ -1,0 +1,14 @@
+[Unit]
+Description=MediaCenter Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/bin/sh /home/pi/MediaCenter/service-up.sh
+ExecStop=/bin/sh /home/pi/MediaCenter/service-down.sh
+
+[Install]
+WantedBy=default.target
+
+

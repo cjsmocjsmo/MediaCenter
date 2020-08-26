@@ -8,12 +8,8 @@ services:
       - tvgobs
     ports:
       - 27017:27017
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: always
-    # volumes:
-    #   - mongovol:/data/db
+    volumes:
+      - mongovol:/data/db
 
   app:
     image: app:2.5
@@ -43,10 +39,6 @@ services:
       - moviegobsvol:/root/fsData/
     depends_on:
       - db
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: always
 
   tvapp:
     image: tvapp:2.6
@@ -71,10 +63,6 @@ services:
       - tvgobsvol:/root/fsData/
     depends_on:
       - db
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: always
 
 networks:
   moviegobs:
