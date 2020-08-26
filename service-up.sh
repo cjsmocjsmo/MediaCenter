@@ -1,4 +1,5 @@
 #!/bin/sh
+cd;
 docker system prune -f;
 docker-compose -f /home/pi/MediaCenter/docker-compose.yml -d up;
 docker-compose -f /home/pi/yts-svlt/docker-compose.yml -d up;
