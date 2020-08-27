@@ -8,8 +8,8 @@ services:
       - tvgobs
     ports:
       - 27017:27017
-    volumes:
-      - mongovol:/data/db
+    # volumes:
+    #   - mongovol:/data/db
 
   app:
     image: app:2.5
