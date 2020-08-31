@@ -71,8 +71,8 @@ func CreateMoviesThumbnail(p string) (thumbINFO ThumbInFo) {
 		thumbpathtwo := MSA + ":" + MSP + MTPP + BP
 		
 		thumbpath := os.Getenv("MOVIEGOBS_THUMBNAIL_PIC_PATH") + "/" + basepath
-		log.Printf("\n this is thumbpath %v \n", thumbpath)
-
+		log.Printf("\n\n THIS IS THUMBPATH %v \n\n", thumbpath)
+		log.Printf("\n\n THIS IS THUMBPATH2 %v \n\n", thumbpathtwo)
 
 		_, err := os.Stat(thumbpath)
 		if err == nil {
