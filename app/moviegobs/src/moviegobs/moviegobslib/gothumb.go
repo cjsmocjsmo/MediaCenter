@@ -73,15 +73,25 @@ func CreateMoviesThumbnail(p string) (thumbINFO ThumbInFo) {
 		thumbpath := os.Getenv("MOVIEGOBS_THUMBNAIL_PIC_PATH") + "/" + basepath
 		log.Printf("\n this is thumbpath %v \n", thumbpath)
 
-		pic, err := imaging.Open(p)
-		if err != nil {
-			log.Printf("\n this is file Open error jpgthumb %v \n", p)
+
+		_, err := os.Stat(thumbpath)
+		if err == nil {
+			log.Printf("file %s exists", thumbpath)
+		} else if os.IsNotExist(err) {
+			pic, err := imaging.Open(p)
+			if err != nil {
+				log.Printf("\n this is file Open error jpgthumb %v \n", p)
+			}
+			thumbImage := imaging.Resize(pic, 0, 250, imaging.Lanczos)
+			err = imaging.Save(thumbImage, thumbpath)
+			if err != nil {
+				fmt.Println(err)
+			}
+			// log.Printf("file %s not exists", file)
+		} else {
+			log.Printf("file %s stat error: %v", thumbpath, err)
 		}
-		thumbImage := imaging.Resize(pic, 0, 400, imaging.Lanczos)
-		err = imaging.Save(thumbImage, thumbpath)
-		if err != nil {
-			fmt.Println(err)
-		}
+
 
 		tid := UUID()
 		ThumbINFO := ThumbInFo{ID: bson.NewObjectId(),
