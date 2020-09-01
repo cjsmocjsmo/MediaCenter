@@ -43,7 +43,7 @@ services:
       - db
 
   tvapp:
-    image: tvapp:2.6
+    image: tvapp:2.7
     build: ./tvapp
     environment:
       - TVGOBS_SETUP=1
@@ -92,5 +92,5 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /media/pi/PiTB/media/TVShows
+      device: /media/pi/PiTB/media
       o: bind
