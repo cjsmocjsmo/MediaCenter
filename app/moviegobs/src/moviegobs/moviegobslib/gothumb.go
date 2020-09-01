@@ -16,6 +16,17 @@ import (
 	"github.com/globalsign/mgo/bson"
 )
 
+//ThumbInFo struct exported to setup
+type ThumbInFo struct {
+	ID        bson.ObjectId `bson:"_id,omitempty"`
+	MovName   string        `bson:"movname"`
+	BasePath  string        `bson:"baspath"`
+	DirPATH   string        `bson:"dirpath"`
+	ThumbPath string        `bson:"thumbpath"`
+	ThumbID   string        `bson:"thumbid"`
+	ThumbPathTwo string `bson:"thumbpathtwo"`
+}
+
 //UUID holds the unique identifier for the file
 func UUID() (UUID string) {
 	aSeed := time.Now()
@@ -34,34 +45,50 @@ func myPathSplit(myPath string) (DirPath string, BaseNAme string, MOvName string
 	return
 }
 
-//ThumbInFo struct exported to setup
-type ThumbInFo struct {
-	ID        bson.ObjectId `bson:"_id,omitempty"`
-	MovName   string        `bson:"movname"`
-	BasePath  string        `bson:"baspath"`
-	DirPATH   string        `bson:"dirpath"`
-	ThumbPath string        `bson:"thumbpath"`
-	ThumbID   string        `bson:"thumbid"`
-	ThumbPathTwo string `bson:"thumbpathtwo"`
+func getServerAddr() (addr string) {
+	addr = os.Getenv("MOVIEGOBS_SERVER_ADDRESS")
+	return
 }
 
+func getServerPort() (port string) {
+	port = os.Getenv("MOVIEGOBS_SERVER_PORT")
+	return
+}
+
+func getThumbPath() (tpath string) {
+	tpath = os.Getenv("MOVIEGOBS_THUMBNAIL_PIC_PATH")
+	return
+}
 //CreateMoviesThumbnail exported to setup
 func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 // func CreateMoviesThumbnail(p string) (thumbINFO ThumbInFo) {
 	dirpath, basepath, movname, ext := myPathSplit(p)
+	ThumbINFO.ID = bson.NewObjectId()
+	ThumbINFO.MovName = movname
+	ThumbINFO.BasePath = basepath
+	ThumbINFO.DirPATH = dirpath
+
 	if ext == ".txt" {
 		fmt.Print("what the fuck a text file")
 	} else {
-		MSA := os.Getenv("MOVIEGOBS_SERVER_ADDRESS")
-		MSP := os.Getenv("MOVIEGOBS_SERVER_PORT")
-		MTPP := os.Getenv("MOVIEGOBS_THUMBNAIL_PIC_PATH")
-		BP := "/" + url.QueryEscape(basepath)
-		thumbpathtwo := MSA + ":" + MSP + MTPP + BP
-		
-		thumbpath := os.Getenv("MOVIEGOBS_THUMBNAIL_PIC_PATH") + "/" + basepath
-		log.Printf("\n\n THIS IS THUMBPATH %v \n\n", thumbpath)
-		log.Printf("\n\n THIS IS THUMBPATH2 %v \n\n", thumbpathtwo)
+		// MSA := os.Getenv("MOVIEGOBS_SERVER_ADDRESS")
+		MSA := getServerAddr()
 
+		// MSP := os.Getenv("MOVIEGOBS_SERVER_PORT")
+		MSP := getServerPort()
+
+		// MTPP := os.Getenv("MOVIEGOBS_THUMBNAIL_PIC_PATH")
+		MTPP := getThumbPath()
+
+		BP := "/" + url.QueryEscape(basepath)
+		
+		ThumbINFO.ThumbPathTwo = MSA + ":" + MSP + MTPP[1:] + BP
+
+		thumbpath := MTPP + "/" + basepath
+		// log.Printf("\n\n THIS IS THUMBPATH %v \n\n", thumbpath)
+		// log.Printf("\n\n THIS IS THUMBPATH2 %v \n\n", thumbpathtwo)
+		ThumbINFO.ThumbPath = thumbpath
+		ThumbINFO.ThumbID = UUID()
 		_, err := os.Stat(thumbpath)
 		if err == nil {
 			log.Printf("file %s exists", thumbpath)
@@ -78,14 +105,10 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 		} else {
 			log.Printf("file %s stat error: %v", thumbpath, err)
 		}
-		ThumbINFO.ID = bson.NewObjectId()
-		ThumbINFO.MovName = movname
-		ThumbINFO.BasePath = basepath
-		ThumbINFO.DirPATH = dirpath
-		ThumbINFO.ThumbPath = thumbpath
-		ThumbINFO.ThumbID = UUID()
-		ThumbINFO.ThumbPathTwo = thumbpathtwo
-		fmt.Println(ThumbINFO)
+
+		
+		
+		fmt.Println(&ThumbINFO)
 		cmtses := DBcon()
 		defer cmtses.Close()
 		CMTc := cmtses.DB("movbsthumb").C("movbsthumb")
@@ -97,7 +120,8 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 		fmt.Println("THIS IS THUMBINFO")
 		log.Println(&ThumbINFO)
 	}
-	return ThumbINFO
+	return
+	// return ThumbINFO
 	// return thumbINFO
 }
 

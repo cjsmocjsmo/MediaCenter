@@ -12,7 +12,7 @@ services:
     #   - mongovol:/data/db
 
   app:
-    image: app:2.7
+    image: app:2.8
     build: ./app
     environment:
       - MOVIEGOBS_SETUP=1
