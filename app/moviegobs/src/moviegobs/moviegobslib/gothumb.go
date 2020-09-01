@@ -14,7 +14,6 @@ import (
 	"net/url"
 	"github.com/disintegration/imaging"
 	"github.com/globalsign/mgo/bson"
-	// "strings"
 )
 
 //UUID holds the unique identifier for the file
@@ -27,7 +26,6 @@ func UUID() (UUID string) {
 	return
 }
 
-
 func myPathSplit(myPath string) (DirPath string, BaseNAme string, MOvName string, Ext string) {
 	DirPath, BaseNAme = path.Split(myPath)
 	Ext = BaseNAme[3:]
@@ -35,17 +33,6 @@ func myPathSplit(myPath string) (DirPath string, BaseNAme string, MOvName string
 	MOvName = BaseNAme[:factor]
 	return
 }
-
-// Star Trek STTV S01E29 The City On The Edge Of Forever.jpg'
-// func myPathSplitTV(myPath string) (DirPath string, BaseName string, Ext string, Season string, Episode string, EpisodeName string) {
-// 	DirPath, BaseName = path.Split(myPath)
-// 	Ext = BaseName[3:]
-// 	Season = BaseName[17:19]
-// 	Episode = BaseName[20:22]
-// 	factor := len(BaseName) - 4
-// 	EpisodeName = BaseName[24:factor]
-// 	return
-// }
 
 //ThumbInFo struct exported to setup
 type ThumbInFo struct {
@@ -59,7 +46,8 @@ type ThumbInFo struct {
 }
 
 //CreateMoviesThumbnail exported to setup
-func CreateMoviesThumbnail(p string) (thumbINFO ThumbInFo) {
+func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
+// func CreateMoviesThumbnail(p string) (thumbINFO ThumbInFo) {
 	dirpath, basepath, movname, ext := myPathSplit(p)
 	if ext == ".txt" {
 		fmt.Print("what the fuck a text file")
@@ -87,21 +75,16 @@ func CreateMoviesThumbnail(p string) (thumbINFO ThumbInFo) {
 			if err != nil {
 				fmt.Println(err)
 			}
-			// log.Printf("file %s not exists", file)
 		} else {
 			log.Printf("file %s stat error: %v", thumbpath, err)
 		}
-
-
-		tid := UUID()
-		ThumbINFO := ThumbInFo{ID: bson.NewObjectId(),
-			MovName:   movname,   //ex mythumbnail
-			BasePath:  basepath,  //ex mythumbnail.jpg
-			DirPATH:   dirpath,   //ex /usr/share/moviegobs
-			ThumbPath: thumbpath, //our static folder path
-			ThumbID:   tid,
-			ThumbPathTwo: thumbpathtwo,
-		}
+		ThumbINFO.ID = bson.NewObjectId()
+		ThumbINFO.MovName = movname
+		ThumbINFO.BasePath = basepath
+		ThumbINFO.DirPATH = dirpath
+		ThumbINFO.ThumbPath = thumbpath
+		ThumbINFO.ThumbID = UUID()
+		ThumbINFO.ThumbPathTwo = thumbpathtwo
 		fmt.Println(ThumbINFO)
 		cmtses := DBcon()
 		defer cmtses.Close()
@@ -114,7 +97,8 @@ func CreateMoviesThumbnail(p string) (thumbINFO ThumbInFo) {
 		fmt.Println("THIS IS THUMBINFO")
 		log.Println(&ThumbINFO)
 	}
-	return thumbINFO
+	return ThumbINFO
+	// return thumbINFO
 }
 
 //NoArtList exported to setup
@@ -144,62 +128,4 @@ func FindPicPaths(mpath string, noartpicpath string) (result string) {
 	}
 	return
 }
-
-//FindPicPathsTV comment
-// func FindPicPathsTV(mpath string, noartpicpath string) (result string) {
-// 	// DirPath: dirpath,
-// 	// BaseName: basename,
-// 	// Ext: ext,
-// 	// Season: season,
-// 	// Episode: episode,
-// 	// EpisodeName: episodename,
-// 	_, _, _, Season, Episode, EpisodeName := myPathSplitTV(mpath)
-// 	Tses := DBcon()
-// 	defer Tses.Close()
-// 	MTc := Tses.DB("moviegobs").C("tvbsthumb")
-// 	b1 := bson.M{"season": Season, "episode": Episode, "episodename": EpisodeName}
-// 	b2 := bson.M{"_Id": 0}
-// 	var ThumbII []map[string]string
-// 	err := MTc.Find(b1).Select(b2).All(&ThumbII)
-// 	if err != nil {
-// 		log.Println(err)
-// 	}
-// 	fmt.Println(ThumbII)
-// 	LenI := len(ThumbII)
-// 	if LenI == 0 {
-// 		NoArtList = append(NoArtList, mpath)
-// 		result = noartpicpath
-// 	} else {
-// 		result = ThumbII[0]["thumbpath"]
-// 		fmt.Printf("THIS IS THUMBI.THUMBPATH:  %s", ThumbII[0]["thumbpath"])
-// 	}
-// 	return
-// }
-
-
-
-
-//CreateTVShowsThumbnail comment
-// func CreateTVShowsThumbnail(p string) string {
-// 	_, fnn := path.Split(p)
-// 	nfn1 := "./static/images/thumbnails/" + fnn
-// 	//nfn1 := "./static/test/" + fnn
-// 	// pic, err := imaging.Open(p)
-// 	// if err != nil {
-// 	// 	fmt.Printf("\n this is file Open error jpgthumb %v \n", p)
-// 	// }
-
-   
-//     pic, err := imaging.Open(p)
-//     if err != nil {
-//         fmt.Printf("\n this is file Open error jpgthumb %v \n", p)
-//     }
-
-// 	cjImage := imaging.Thumbnail(pic, 100, 100, imaging.Lanczos)
-//     err = imaging.Save(cjImage, nfn1)
-//     if err != nil {
-// 		fmt.Println(err)
-// 	}
-//     return nfn1[1:]
-// }
 

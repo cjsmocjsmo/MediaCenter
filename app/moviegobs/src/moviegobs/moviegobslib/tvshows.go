@@ -11,6 +11,15 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+func tvshowsUUID() (UUID string) {
+	aseed := time.Now()
+	aSeed := aseed.UnixNano()
+	rand.Seed(aSeed)
+	u := rand.Int63n(aSeed)
+	UUID = strconv.FormatInt(u, 10)
+	return
+}
+
 type tVShowInfoS struct {
 	ID bson.ObjectId `bson:"_id,omitempty"`
 	FilePath string `bson:"filepath"`
@@ -25,132 +34,58 @@ type tVShowInfoS struct {
 	ThumbPath string `bson:"thumbpath"`
 }
 
-// func tvshowsDBcon() *mgo.Session {
-// 	s, err := mgo.Dial("127.0.0.1")
-// //	s, err := mgo.Dial("mongodb://192.168.1.101:27017")
-// 	if err != nil {
-// 		fmt.Println("this is dial err")
-// 		panic(err)
-// 	}
-// 	return s
-// }
 func getTvShowInfo(apath string, tvshowpicPath string) (TvSI tVShowInfoS) {
-//func getTvShowInfo(apath string, tvshowpicPath string, tvshowpicInfo string) (TvSI tVShowInfoS) {
+	_, filename := path.Split(apath)
+	boo := len(filename) - 4
+	TvSI.ID = bson.NewObjectId()
+	TvSI.FilePath = apath
+	TvSI.MediaID = tvshowsUUID()
+	TvSI.Genre = "TVShows"
+	TvSI.TVShowPicPath = tvshowpicPath
 	switch {
 		case strings.Contains(apath, "TVShows/TNG"):
-			_, filename := path.Split(apath)
-			var boo = len(filename) - 4
-			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
-				FilePath: apath,
-				Catagory: "TNG",
-				MediaID: tvshowsUUID(),
-				Genre: "TVShows",
-				Season: filename[15:17],
-				Episode: filename[18:20],
-				Title: filename[21:boo],
-				Series: filename[21:boo],
-				TVShowPicPath: tvshowpicPath,
-				//ThumbPath: tvshowpicInfo,
-			}
+			TvSI.Catagory = "TNG"
+			TvSI.Season = filename[15:17]
+			TvSI.Episode = filename[18:20]
+			TvSI.Title = filename[21:boo]
+			TvSI.Series = filename[21:boo]
 		case strings.Contains(apath, " STTV "):
-			_, filename := path.Split(apath)
-			var boo = len(filename) - 4
-			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
-				FilePath: apath,
-				Catagory: "STTV",
-				MediaID: tvshowsUUID(),
-				Genre: "TVShows",
-				Season: filename[16:18],
-				Episode: filename[19:21],
-				Title: filename[21:boo],
-				Series: "Star Trek",
-				TVShowPicPath: tvshowpicPath,
-				//ThumbPath: tvshowpicInfo,
-			}
+			TvSI.Catagory = "STTV"
+			TvSI.Season = filename[16:18]
+			TvSI.Episode = filename[19:21]
+			TvSI.Title = filename[21:boo]
+			TvSI.Series = "Star Trek"
 		case strings.Contains(apath, "The Orville"):
-			_, filename := path.Split(apath)
-			var boo = len(filename) - 4
-			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
-				FilePath: apath,
-				Catagory: "The Orville",
-				MediaID: tvshowsUUID(),
-				Genre: "TVShows",
-				Season: filename[13:15],
-				Episode: filename[16:18],
-				Title: filename[19:boo],
-				Series: "The Orville",
-				TVShowPicPath: tvshowpicPath,
-				//ThumbPath: tvshowpicInfo,
-			}
+			TvSI.Catagory = "The Orville"
+			TvSI.Season = filename[13:15]
+			TvSI.Episode = filename[16:18]
+			TvSI.Title = filename[19:boo]
+			TvSI.Series = "The Orville"
 		case strings.Contains(apath, "Voyager"):
-			_, filename := path.Split(apath)
-			var boo = len(filename) - 4
-			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
-				FilePath: apath,
-				Catagory: "Voyager",
-				MediaID: tvshowsUUID(),
-				Genre: "TVShows",
-				Season: filename[19:21],
-				Episode: filename[22:24],
-				Title: filename[24:boo],
-				Series: "Voyager",
-				TVShowPicPath: tvshowpicPath,
-				//ThumbPath: tvshowpicInfo,
-			}
+			TvSI.Catagory = "Voyager"
+			TvSI.Season = filename[19:21]
+			TvSI.Episode = filename[22:24]
+			TvSI.Title = filename[24:boo]
+			TvSI.Series = "Voyager"
 		case strings.Contains(apath, "Discovery"):
-			_, filename := path.Split(apath)
-			var boo = len(filename) - 4
-			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
-				FilePath: apath,
-				Catagory: "Discovery",
-				MediaID: tvshowsUUID(),
-				Genre: "TVShows",
-				Season: filename[21:23],
-				Episode: filename[24:26],
-				Title: filename[27:boo],
-				Series: "Discovery",
-				TVShowPicPath: tvshowpicPath,
-				//ThumbPath: tvshowpicInfo,
-			}
+			TvSI.Catagory = "Discovery"
+			TvSI.Season = filename[21:23]
+			TvSI.Episode = filename[24:26]
+			TvSI.Title = filename[27:boo]
+			TvSI.Series = "Discovery"
 		case strings.Contains(apath, "ENT"):
-			_, filename := path.Split(apath)
-			var boo = len(filename) - 4
-			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
-				FilePath: apath,
-				Catagory: "Enterprise",
-				MediaID: tvshowsUUID(),
-				Genre: "TVShows",
-				Season: filename[15:17],
-				Episode: filename[18:20],
-				Title: filename[20:boo],
-				Series: "Enterprise",
-				TVShowPicPath: tvshowpicPath,
-				//ThumbPath: tvshowpicInfo,
-			}
+			TvSI.Catagory = "Enterprise"
+			TvSI.Season = filename[15:17]
+			TvSI.Episode = filename[18:20]
+			TvSI.Title = filename[20:boo]
+			TvSI.Series = "Enterprise"
 		case strings.Contains(apath, "The Last Ship"):
-			_, filename := path.Split(apath)
-			var boo = len(filename) - 4
-			TvSI = tVShowInfoS{ID: bson.NewObjectId(),
-				FilePath: apath,
-				Catagory: "The Last Ship",
-				MediaID: tvshowsUUID(),
-				Genre: "TVShows",
-				Season: filename[15:17],
-				Episode: filename[18:20],
-				Title: filename[21:boo],
-				Series: "The Last Ship",
-				TVShowPicPath: tvshowpicPath,
-				//ThumbPath: tvshowpicInfo,
-			}
+			TvSI.Catagory = "The Last Ship"
+			TvSI.Season = filename[15:17]
+			TvSI.Episode = filename[18:20]
+			TvSI.Title = filename[21:boo]
+			TvSI.Series = "The Last Ship"
 	}
 	return
 }
 
-func tvshowsUUID() (UUID string) {
-	aseed := time.Now()
-	aSeed := aseed.UnixNano()
-	rand.Seed(aSeed)
-	u := rand.Int63n(aSeed)
-	p := strconv.FormatInt(u, 10)
-	return p
-}

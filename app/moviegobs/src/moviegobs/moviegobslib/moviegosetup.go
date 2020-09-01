@@ -124,14 +124,14 @@ func myDirVisit(pAth string, f os.FileInfo, err error) error {
 		return err       // this is fatal.
 	}
 	switch {
-	case ext == ".mp4":
-		genMatch(pAth, matchedTV)
-	case ext == ".mkv":
-		genMatch(pAth, matchedTV)
-	case ext == ".avi":
-		genMatch(pAth, matchedTV)
-	case ext == ".m4v":
-		genMatch(pAth, matchedTV)
+		case ext == ".mp4":
+			genMatch(pAth, matchedTV)
+		case ext == ".mkv":
+			genMatch(pAth, matchedTV)
+		case ext == ".avi":
+			genMatch(pAth, matchedTV)
+		case ext == ".m4v":
+			genMatch(pAth, matchedTV)
 	}
 	return nil
 }
