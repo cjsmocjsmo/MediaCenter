@@ -12,7 +12,7 @@ services:
     #   - mongovol:/data/db
 
   app:
-    image: app:2.8
+    image: app:2.9
     build: ./app
     environment:
       - MOVIEGOBS_SETUP=1
@@ -20,6 +20,7 @@ services:
       - MOVIEGOBS_MONGODB_THUMB_ADDRESS=mongodb://db:27017/movbsthumb
       - MOVIEGOBS_MOVIES_PATH=/root/fsData/Movies
       - MOVIEGOBS_TVSHOWS_PATH=/root/fsData/TVShows
+      - MOVIEGOBS_POSTERS_PATH=/root/fsData/Thumbs
       - MOVIEGOBS_HARDDRIVE_POSTERS_PATH=/root/fsData/Posters
       - MOVIEGOBS_NO_ART_PIC_PATH=./static/images/animals.jpg
       - MOVIEGOBS_THUMB_BASE_PATH=./static/images/thumbnails
@@ -37,6 +38,7 @@ services:
       - 8888:8888
     volumes:
       - moviegobsvol:/root/fsData/
+      - moviegobspicvol:/root/static/
     depends_on:
       - db
 
@@ -78,9 +80,17 @@ volumes:
       device: /media/pi/PiTB/media
       o: bind
 
+  moviegobspicvol:
+    driver: local
+    driver_opts:
+      type: none
+      device: /media/pi/PiTB/media/Thumbs
+      o: bind
+
+
   tvgobsvol:
     driver: local
     driver_opts:
       type: none
-      device: /media/pi/PiTB/media
+      device: /media/pi/PiTB/media/TVShows
       o: bind
