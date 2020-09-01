@@ -1,7 +1,7 @@
 package moviegolib
 
 import (
-	"fmt"
+	// "fmt"
 	"math/rand"
 	"path"
 	"strconv"
@@ -10,8 +10,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-func getmovName(movname string) string {
-	var movName string
+func getmovName(movname string) (movName string) {
 	_, fname := path.Split(movname)
 	if strings.Contains(fname, "(") {
 		fi := strings.Index(fname, "(")
@@ -21,7 +20,7 @@ func getmovName(movname string) string {
 		ddex := len(fname) - 11
 		movName = fname[ddex:]
 	}
-	return movName
+	return
 }
 
 func getMovieYear(apath string) (movyr string) {
@@ -30,6 +29,16 @@ func getMovieYear(apath string) (movyr string) {
 	fdex := fi + 1
 	ldex := strings.LastIndex(filename, ")")
 	movyr = filename[fdex:ldex]
+	return
+}
+
+func moviesUUID() (UUID string) {
+	aseed := time.Now()
+	aSeed := aseed.UnixNano()
+	rand.Seed(aSeed)
+	u := rand.Int63n(aSeed)
+	UUID = strconv.FormatInt(u, 10)
+	// p := strconv.FormatInt(u, 10)
 	return
 }
 
@@ -50,279 +59,60 @@ type MOVI struct {
 
 // GetMovieInfo comment
 func GetMovieInfo(apath string, movpicInfo string) (MovInfo MOVI) {
-	var filesystempath = "/media/pi/PiTB/media/" + apath[13:len(apath)]
-	fmt.Printf("THIS IS FILESYSTEMPATH  %s", filesystempath)
+	filesystempath := "/media/pi/PiTB/media/" + apath[13:len(apath)]
+	dirp, _ := path.Split(apath)
+	MovInfo.ID = bson.NewObjectId()
+	MovInfo.DirPath = dirp
+	MovInfo.Filepath = apath
+	MovInfo.MediaID = moviesUUID()
+	MovInfo.Genre = "movies"
+	MovInfo.MovFSPath = filesystempath
+	MovInfo.ThumbPath = movpicInfo
+	MovInfo.MovYear = getMovieYear(apath)
 	switch {
-	case strings.Contains(apath, "SciFi"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "SciFi",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "Cartoons"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "Cartoons",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "Godzilla"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "Godzilla",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "Kingsman"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "Kingsman",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "StarTrek") && !strings.Contains(apath, " STTV "):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "StarTrek",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "StarWars"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "StarWars",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "SuperHeros"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "SuperHeros",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "IndianaJones"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "IndianaJones",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "Action"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "Action",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "Comedy"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "Comedy",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "Drama"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "Drama",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "JurassicPark"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "JurassicPark",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "JohnWayne"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "JohnWayne",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "JohnWick"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "JohnWick",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "MenInBlack"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "MenInBlack",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "HarryPotter"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "HarryPotter",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "Tremors"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "Tremors",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "Misc"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "Misc",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "DieHard"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "DieHard",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
-	case strings.Contains(apath, "Pirates"):
-		dirp, _ := path.Split(apath)
-		MovInfo = MOVI{ID: bson.NewObjectId(),
-			DirPath:   dirp,
-			Filepath:  apath,
-			MediaID:   moviesUUID(),
-			Movname:   getmovName(apath),
-			Genre:     "movies",
-			Catagory:  "Pirates",
-			MovFSPath: filesystempath,
-			ThumbPath: movpicInfo,
-			MovYear: getMovieYear(apath),
-		}
+		case strings.Contains(apath, "SciFi"):
+			MovInfo.Catagory = "SciFi"
+		case strings.Contains(apath, "Cartoons"):
+			MovInfo.Catagory = "Cartoons"
+		case strings.Contains(apath, "Godzilla"):
+			MovInfo.Catagory = "Godzilla"
+		case strings.Contains(apath, "Kingsman"):
+			MovInfo.Catagory = "Kingsman"
+		case strings.Contains(apath, "StarTrek") && !strings.Contains(apath, " STTV "):
+			MovInfo.Catagory = "StarTrek"
+		case strings.Contains(apath, "StarWars"):
+			MovInfo.Catagory = "StarWars"
+		case strings.Contains(apath, "SuperHeros"):
+			MovInfo.Catagory = "SuperHeros"
+		case strings.Contains(apath, "IndianaJones"):
+			MovInfo.Catagory = "IndianaJones"
+		case strings.Contains(apath, "Action"):
+			MovInfo.Catagory = "Action"
+		case strings.Contains(apath, "Comedy"):
+			MovInfo.Catagory = "Comedy"
+		case strings.Contains(apath, "Drama"):
+			MovInfo.Catagory = "Drama"
+		case strings.Contains(apath, "JurassicPark"):
+			MovInfo.Catagory = "JurassicPark"
+		case strings.Contains(apath, "JohnWayne"):
+			MovInfo.Catagory = "JohnWayne"
+		case strings.Contains(apath, "JohnWick"):
+			MovInfo.Catagory = "JohnWick"
+		case strings.Contains(apath, "MenInBlack"):
+			MovInfo.Catagory = "MenInBlack"
+		case strings.Contains(apath, "HarryPotter"):
+			MovInfo.Catagory = "HarryPotter"
+		case strings.Contains(apath, "Tremors"):
+			MovInfo.Catagory = "Tremors"
+		case strings.Contains(apath, "Misc"):
+			MovInfo.Catagory = "Misc"
+		case strings.Contains(apath, "DieHard"):
+			MovInfo.Catagory = "DieHard"
+		case strings.Contains(apath, "Pirates"):
+			MovInfo.Catagory = "Pirates"
 	}
 	return
 }
 
-func moviesUUID() (UUID string) {
-	aseed := time.Now()
-	aSeed := aseed.UnixNano()
-	rand.Seed(aSeed)
-	u := rand.Int63n(aSeed)
-	p := strconv.FormatInt(u, 10)
-	return p
-}
+
 
