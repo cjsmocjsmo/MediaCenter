@@ -13,7 +13,7 @@ import (
 
 //DBcon is exported for all our db connection objects
 func DBcon() *mgo.Session {
-	fmt.Println("Starting Update db session")
+	fmt.Println("Starting DB session")
 	s, err := mgo.Dial(os.Getenv("MOVIEGOBS_MONGODB_ADDRESS"))
 	if err != nil {
 		fmt.Println("this is dial err")
@@ -162,10 +162,11 @@ func SetUp() (ExStat int) {
 	} else {
 		fmt.Println("thumb dir populated")
 	}
-	err = filepath.Walk(os.Getenv("MOVIEGOBS_MOVIES_PATH"), myDirVisit)
-	if err != nil {
-		fmt.Println(err)
-	}
+	// err = filepath.Walk(os.Getenv("MOVIEGOBS_MOVIES_PATH"), myDirVisit)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+
 	os.Setenv("MOVIEGOBS_SETUP", "0")
 	fmt.Printf("this is noartlist :: %s", NoArtList)
 	fmt.Println(startTime)
