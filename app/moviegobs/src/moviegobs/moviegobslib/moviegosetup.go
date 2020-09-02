@@ -154,6 +154,7 @@ func SetUp() (ExStat int) {
 	//Check thumbnail dir create thumbs if empty
 	empty, err := isDirEmpty("./static/images/thumbnails")
 	if empty {
+		fmt.Println("\n\n THUMBNAIL DIR IS EMPTY")
 		filepath.Walk(os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"), posterdirVisit)
 		// filepath.Walk(os.Getenv("MOVIEGOBS_HARDRIVE_TVPOSTER_PATH"), posterdirVisit)
 	} else {
