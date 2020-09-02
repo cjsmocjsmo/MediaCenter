@@ -96,7 +96,8 @@ func posterdirVisit(posterpath string, f os.FileInfo, err error) error {
 		log.Println("\nstarting createtvshowthumbnail")
 		// CreateTVShowsThumbnail(posterpath)
 	} else {
-		log.Println("\n starting createmoviesthumbnail")
+		log.Println("\n starting createmoviesthumbnail this is posterpath")
+		fmt.Println(posterpath)
 		CreateMoviesThumbnail(posterpath)
 	}
 	return nil
@@ -160,8 +161,8 @@ func SetUp() (ExStat int) {
 	// empty, err := isDirEmpty("./static/images/thumbnails")
 	empty, err := isDirEmpty("/root/fsData/Thumbs")
 	if empty {
-		fmt.Println("\n\n THUMBNAIL DIR IS EMPTY")
-		fmt.Printf("\n\n this is MHPP %s \n\n",os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"))
+		// fmt.Println("\n\n THUMBNAIL DIR IS EMPTY")
+		// fmt.Printf("\n\n this is MHPP %s \n\n", os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"))
 		filepath.Walk("/root/fsData/Posters2", posterdirVisit)
 		// filepath.Walk(os.Getenv("MOVIEGOBS_HARDRIVE_TVPOSTER_PATH"), posterdirVisit)
 	} else {

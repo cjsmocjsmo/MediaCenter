@@ -82,11 +82,11 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 		MTPP := getThumbPath() // ./static/images/thumbnails
 
 		BP := "/" + url.QueryEscape(basepath)
-		thumbpathtwo := MSA + ":" + MSP + MTPP[1:] + BP
+		thumbpathtwo := MSA + ":" + MSP + MTPP + BP
 		
 		ThumbINFO.ThumbPathTwo = thumbpathtwo
 
-		thumbpath := MTPP + "/" + basepath
+		thumbpath := "/root/fsData/Thumbs/" + basepath
 		log.Printf("\n\n THIS IS THUMBPATH %v \n\n", thumbpath)
 		log.Printf("\n\n THIS IS THUMBPATH2 %v \n\n", thumbpathtwo)
 		ThumbINFO.ThumbPath = thumbpath
