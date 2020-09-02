@@ -89,6 +89,7 @@ func posterdirVisit(posterpath string, f os.FileInfo, err error) error {
 	}
 	if f.IsDir() {
 		log.Println("fi its a dir")
+		fmt.Println(posterpath)
 	} else if ext == ".txt" {
 		log.Printf("\n\n its a txt file %s", f)
 	} else if strings.Contains(posterpath, "TVShows") {
