@@ -161,8 +161,8 @@ func SetUp() (ExStat int) {
 	empty, err := isDirEmpty("/root/fsData/Thumbs")
 	if empty {
 		fmt.Println("\n\n THUMBNAIL DIR IS EMPTY")
-		fmt.Println(os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"))
-		filepath.Walk(os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"), posterdirVisit)
+		fmt.Printf("\n\n this is MHPP %s \n\n",os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"))
+		filepath.Walk(os.Getenv("/root/fsData/Posters2", posterdirVisit)
 		// filepath.Walk(os.Getenv("MOVIEGOBS_HARDRIVE_TVPOSTER_PATH"), posterdirVisit)
 	} else {
 		fmt.Println("thumb dir populated")
