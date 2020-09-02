@@ -23,6 +23,7 @@ func DBcon() *mgo.Session {
 }
 
 func isDirEmpty(name string) (bool, error) {
+	fmt.Printf("\n this is name from isDirEmpty %s \n", name)
 	f, err := os.Open(name)
 	if err != nil {
 		return false, err
@@ -36,6 +37,7 @@ func isDirEmpty(name string) (bool, error) {
 	if err == io.EOF {
 		return true, nil
 	}
+	fmt.Println("isDirEmpty is complete")
 	return false, err
 }
 
@@ -157,6 +159,7 @@ func SetUp() (ExStat int) {
 	empty, err := isDirEmpty("/root/fsData/Thumbs")
 	if empty {
 		fmt.Println("\n\n THUMBNAIL DIR IS EMPTY")
+		fmt.Println(os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"))
 		filepath.Walk(os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"), posterdirVisit)
 		// filepath.Walk(os.Getenv("MOVIEGOBS_HARDRIVE_TVPOSTER_PATH"), posterdirVisit)
 	} else {
