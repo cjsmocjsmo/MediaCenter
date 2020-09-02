@@ -110,11 +110,11 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 
 		
 		
-		fmt.Println(&ThumbINFO)
+		fmt.Printf("THIS IS THUMBINFO:\n %s", &ThumbINFO)
 		cmtses := DBcon()
 		defer cmtses.Close()
 		CMTc := cmtses.DB("movbsthumb").C("movbsthumb")
-		err = CMTc.Insert(ThumbINFO)
+		err = CMTc.Insert(&ThumbINFO)
 		if err != nil {
 			fmt.Println(err)
 		}
