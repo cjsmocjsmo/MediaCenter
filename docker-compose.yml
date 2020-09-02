@@ -25,8 +25,8 @@ services:
       - MOVIEGOBS_HARDRIVE_POSTERS_PATH=/root/fsData/Posters2
       - MOVIEGOBS_NO_ART_PIC_PATH=./static/images/animals.jpg
       - MOVIEGOBS_THUMB_BASE_PATH=./static/images/thumbnails
-      - MOVIEGOBS_THUMBNAIL_PIC_PATH=./static/images/thumbnails
-      # - MOVIEGOBS_THUMBNAIL_PIC_PATH=/static
+      # - MOVIEGOBS_THUMBNAIL_PIC_PATH=./static/images/thumbnails
+      - MOVIEGOBS_THUMBNAIL_PIC_PATH=/static
       - MOVIEGOBS_TEMPLATE_ADDRESS=./static/templates/moviegobs.template
       - MOVIEGOBS_SERVER_PORT=8888
       - MOVIEGOBS_SERVER_ADDRESS=http://192.168.0.42
