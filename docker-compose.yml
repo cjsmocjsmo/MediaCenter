@@ -22,7 +22,7 @@ services:
       - MOVIEGOBS_TVSHOWS_PATH=/root/fsData/TVShows
       - MOVIEGOBS_POSTERS_PATH=/root/fsData/Thumbs
       # - MOVIEGOBS_HARDDRIVE_POSTERS_PATH=/root/fsData/Posters
-      - MOVIEGOBS_HARDRIVE_POSTERS_PATH=/root/static/images/thumbnails
+      - MOVIEGOBS_HARDRIVE_POSTERS_PATH=/root/fsData/Posters2
       - MOVIEGOBS_NO_ART_PIC_PATH=./static/images/animals.jpg
       - MOVIEGOBS_THUMB_BASE_PATH=./static/images/thumbnails
       - MOVIEGOBS_THUMBNAIL_PIC_PATH=./static/images/thumbnails
