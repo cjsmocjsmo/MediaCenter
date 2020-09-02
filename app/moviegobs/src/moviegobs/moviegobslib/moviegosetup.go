@@ -80,8 +80,9 @@ func processMovs(pAth string) {
 // }
 
 func posterdirVisit(posterpath string, f os.FileInfo, err error) error {
-	fmt.Printf("\n this is posterpath %s", posterpath)
+	fmt.Printf("\n\n this is posterpath from posterdirvisit %s\n\n", posterpath)
 	ext := filepath.Ext(posterpath)
+	fmt.Printf("\n\n this is ext from posterdirvistit %s \n\n", ext)
 	if err != nil {
 		fmt.Println(err) // can't walk here,
 		return nil       // but continue walking elsewhere
