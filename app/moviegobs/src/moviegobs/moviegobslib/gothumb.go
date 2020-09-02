@@ -78,15 +78,16 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 		MSP := getServerPort()
 
 		// MTPP := os.Getenv("MOVIEGOBS_THUMBNAIL_PIC_PATH")
-		MTPP := getThumbPath()
+		MTPP := getThumbPath() // ./static/images/thumbnails
 
 		BP := "/" + url.QueryEscape(basepath)
+		thumbpathtwo := MSA + ":" + MSP + MTPP[1:] + BP
 		
-		ThumbINFO.ThumbPathTwo = MSA + ":" + MSP + MTPP[1:] + BP
+		ThumbINFO.ThumbPathTwo = thumbpathtwo
 
 		thumbpath := MTPP + "/" + basepath
-		// log.Printf("\n\n THIS IS THUMBPATH %v \n\n", thumbpath)
-		// log.Printf("\n\n THIS IS THUMBPATH2 %v \n\n", thumbpathtwo)
+		log.Printf("\n\n THIS IS THUMBPATH %v \n\n", thumbpath)
+		log.Printf("\n\n THIS IS THUMBPATH2 %v \n\n", thumbpathtwo)
 		ThumbINFO.ThumbPath = thumbpath
 		ThumbINFO.ThumbID = UUID()
 		_, err := os.Stat(thumbpath)
