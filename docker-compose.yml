@@ -85,7 +85,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /media/pi/PiTB/media/Thumbs
+      device: /media/pi/PiTB/media/Posters
       o: bind
 
 
