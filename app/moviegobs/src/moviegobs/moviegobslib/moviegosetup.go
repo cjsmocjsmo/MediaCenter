@@ -78,6 +78,7 @@ func processMovs(pAth string) {
 // }
 
 func posterdirVisit(posterpath string, f os.FileInfo, err error) error {
+	fmt.Printf("\n this is posterpath %s", posterpath)
 	ext := filepath.Ext(posterpath)
 	if err != nil {
 		fmt.Println(err) // can't walk here,
@@ -86,12 +87,12 @@ func posterdirVisit(posterpath string, f os.FileInfo, err error) error {
 	if f.IsDir() {
 		log.Println("fi its a dir")
 	} else if ext == ".txt" {
-		log.Println("its a txt file")
+		log.Printf("\n\n its a txt file %s", f)
 	} else if strings.Contains(posterpath, "TVShows") {
-		log.Println("starting createtvshowthumbnail")
+		log.Println("\nstarting createtvshowthumbnail")
 		// CreateTVShowsThumbnail(posterpath)
 	} else {
-		log.Println("starting createmoviesthumbnail")
+		log.Println("\n starting createmoviesthumbnail")
 		CreateMoviesThumbnail(posterpath)
 	}
 	return nil
@@ -152,7 +153,8 @@ func SetUp() (ExStat int) {
 	sess.Close()
 	fmt.Println("moviegobs and movbsthumb dbs have been dropped")
 	//Check thumbnail dir create thumbs if empty
-	empty, err := isDirEmpty("./static/images/thumbnails")
+	// empty, err := isDirEmpty("./static/images/thumbnails")
+	empty, err := isDirEmpty("/root/fsData/Thumbs")
 	if empty {
 		fmt.Println("\n\n THUMBNAIL DIR IS EMPTY")
 		filepath.Walk(os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"), posterdirVisit)
