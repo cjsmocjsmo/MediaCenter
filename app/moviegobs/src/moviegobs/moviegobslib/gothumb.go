@@ -132,6 +132,7 @@ var NoArtList []string
 
 //FindPicPaths exported to setup
 func FindPicPaths(mpath string, noartpicpath string) (result string) {
+	fmt.Printf("this is mpath %s", mpath)
 	_, _, movename, _ := myPathSplit(mpath)
 	fmt.Printf("THIS IS MOVENAME %s", movename)
 	Tses := DBcon()
@@ -144,7 +145,7 @@ func FindPicPaths(mpath string, noartpicpath string) (result string) {
 	if err != nil {
 		log.Println(err)
 	}
-	fmt.Println(ThumbI)
+	fmt.Printf("THIS IS THUMBI %s", ThumbI)
 	LenI := len(ThumbI)
 	if LenI == 0 {
 		NoArtList = append(NoArtList, mpath)
@@ -153,6 +154,7 @@ func FindPicPaths(mpath string, noartpicpath string) (result string) {
 		result = ThumbI[0]["thumbpath"]
 		fmt.Printf("THIS IS THUMBI.THUMBPATH:  %s", ThumbI[0]["thumbpath"])
 	}
+	fmt.Printf("this is result %s", result)
 	return
 }
 
