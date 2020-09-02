@@ -20,9 +20,10 @@ services:
       - MOVIEGOBS_MONGODB_THUMB_ADDRESS=mongodb://db:27017/movbsthumb
       - MOVIEGOBS_MOVIES_PATH=/root/fsData/Movies
       - MOVIEGOBS_TVSHOWS_PATH=/root/fsData/TVShows
-      - MOVIEGOBS_POSTERS_PATH=/root/fsData/Thumbs
-      # - MOVIEGOBS_HARDDRIVE_POSTERS_PATH=/root/fsData/Posters
+      # - MOVIEGOBS_POSTERS_PATH=/root/fsData/Thumbs
       - MOVIEGOBS_HARDRIVE_POSTERS_PATH=/root/fsData/Posters2
+      # - MOVIEGOBS_HARDDRIVE_POSTERS_PATH=/root/fsData/Posters
+      
       - MOVIEGOBS_NO_ART_PIC_PATH=./static/images/animals.jpg
       - MOVIEGOBS_THUMB_BASE_PATH=./static/images/thumbnails
       # - MOVIEGOBS_THUMBNAIL_PIC_PATH=./static/images/thumbnails
