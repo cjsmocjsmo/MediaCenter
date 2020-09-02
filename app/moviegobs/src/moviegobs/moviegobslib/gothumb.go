@@ -93,7 +93,7 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 		ThumbINFO.ThumbID = UUID()
 		_, err := os.Stat(thumbpath)
 		if err == nil {
-			log.Printf("file %s exists", thumbpath)
+			log.Printf("FILE %s EXISTS", thumbpath)
 		} else if os.IsNotExist(err) {
 			pic, err := imaging.Open(p)
 			if err != nil {
@@ -133,6 +133,7 @@ var NoArtList []string
 //FindPicPaths exported to setup
 func FindPicPaths(mpath string, noartpicpath string) (result string) {
 	_, _, movename, _ := myPathSplit(mpath)
+	fmt.Printf("THIS IS MOVENAME %s", movename)
 	Tses := DBcon()
 	defer Tses.Close()
 	MTc := Tses.DB("movbsthumb").C("movbsthumb")
