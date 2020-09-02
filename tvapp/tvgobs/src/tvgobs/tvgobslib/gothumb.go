@@ -87,9 +87,10 @@ func CreateMoviesThumbnail(p string) (thumbINFO ThumbInFo) {
 //NoArtList exported to setup
 var NoArtList []string
 
-//FindPicPaths exported to setup
+//so setup
 func FindPicPaths(mpath string, noartpicpath string) (result string) {
 	_, _, movename, _ := myPathSplit(mpath)
+	fmt.Printf("this is movename from findpicpaths %s", movename)
 	Tses := DBcon()
 	defer Tses.Close()
 	MTc := Tses.DB("movbsthumb").C("movbsthumb")
@@ -110,6 +111,7 @@ func FindPicPaths(mpath string, noartpicpath string) (result string) {
 		fmt.Printf("THIS IS THUMBI.THUMBPATH:  %s", ThumbI[0]["thumbpath"])
 
 	}
+	fmt.Printf("this is result %s", result)
 	return
 }
 
