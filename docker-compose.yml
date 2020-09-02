@@ -40,7 +40,7 @@ services:
       - 8888:8888
     volumes:
       - moviegobsvol:/root/fsData/
-      - moviegobspicvol:/root/static/
+      # - moviegobspicvol:/root/static/
     depends_on:
       - db
 
@@ -82,12 +82,12 @@ volumes:
       device: /media/pi/PiTB/media
       o: bind
 
-  moviegobspicvol:
-    driver: local
-    driver_opts:
-      type: none
-      device: /media/pi/PiTB/media/Thumbs
-      o: bind
+  # moviegobspicvol:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: /media/pi/PiTB/media/Thumbs
+  #     o: bind
 
 
   tvgobsvol:
