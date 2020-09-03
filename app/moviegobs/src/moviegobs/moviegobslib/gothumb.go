@@ -61,7 +61,6 @@ func getThumbPath() (tpath string) {
 }
 //CreateMoviesThumbnail exported to setup
 func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
-	fmt.Println(p)
 	dirpath, basepath, movname, ext := myPathSplit(p)
 	ThumbINFO.ID = bson.NewObjectId()
 	ThumbINFO.MovName = movname
