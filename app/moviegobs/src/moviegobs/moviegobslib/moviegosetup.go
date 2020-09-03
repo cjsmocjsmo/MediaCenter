@@ -158,13 +158,9 @@ func SetUp() (ExStat int) {
 	sess.Close()
 	fmt.Println("moviegobs and movbsthumb dbs have been dropped")
 	//Check thumbnail dir create thumbs if empty
-	// empty, err := isDirEmpty("./static/images/thumbnails")
 	empty, err := isDirEmpty("/root/fsData/Thumbs")
 	if empty {
-		// fmt.Println("\n\n THUMBNAIL DIR IS EMPTY")
-		// fmt.Printf("\n\n this is MHPP %s \n\n", os.Getenv("MOVIEGOBS_HARDDRIVE_POSTERS_PATH"))
 		filepath.Walk("/root/fsData/Posters2", posterdirVisit)
-		// filepath.Walk(os.Getenv("MOVIEGOBS_HARDRIVE_TVPOSTER_PATH"), posterdirVisit)
 	} else {
 		fmt.Println("thumb dir populated")
 	}
@@ -172,7 +168,6 @@ func SetUp() (ExStat int) {
 	if err != nil {
 		fmt.Println(err)
 	}
-
 	os.Setenv("MOVIEGOBS_SETUP", "0")
 	fmt.Printf("this is noartlist :: %s", NoArtList)
 	fmt.Println(startTime)

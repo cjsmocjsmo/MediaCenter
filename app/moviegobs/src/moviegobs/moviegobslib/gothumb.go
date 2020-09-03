@@ -61,7 +61,6 @@ func getThumbPath() (tpath string) {
 }
 //CreateMoviesThumbnail exported to setup
 func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
-// func CreateMoviesThumbnail(p string) (thumbINFO ThumbInFo) {
 	fmt.Println(p)
 	dirpath, basepath, movname, ext := myPathSplit(p)
 	ThumbINFO.ID = bson.NewObjectId()
@@ -72,23 +71,13 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 	if ext == ".txt" {
 		fmt.Print("what the fuck a text file")
 	} else {
-		// MSA := os.Getenv("MOVIEGOBS_SERVER_ADDRESS")
 		MSA := getServerAddr()
-
-		// MSP := os.Getenv("MOVIEGOBS_SERVER_PORT")
 		MSP := getServerPort()
-
-		// MTPP := os.Getenv("MOVIEGOBS_THUMBNAIL_PIC_PATH")
-		MTPP := getThumbPath() // ./static/images/thumbnails
-
+		MTPP := getThumbPath()
 		BP := "/" + url.QueryEscape(basepath)
 		thumbpathtwo := MSA + ":" + MSP + MTPP + BP
-		
 		ThumbINFO.ThumbPathTwo = thumbpathtwo
-
 		thumbpath := "/root/fsData/Thumbs/" + basepath
-		log.Printf("\n\n THIS IS THUMBPATH %v \n\n", thumbpath)
-		log.Printf("\n\n THIS IS THUMBPATH2 %v \n\n", thumbpathtwo)
 		ThumbINFO.ThumbPath = thumbpath
 		ThumbINFO.ThumbID = UUID()
 		_, err := os.Stat(thumbpath)
@@ -107,9 +96,6 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 		} else {
 			log.Printf("file %s stat error: %v", thumbpath, err)
 		}
-
-		
-		
 		fmt.Printf("THIS IS THUMBINFO:\n %s", &ThumbINFO)
 		cmtses := DBcon()
 		defer cmtses.Close()
@@ -118,13 +104,8 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 		if err != nil {
 			fmt.Println(err)
 		}
-
-		fmt.Println("THIS IS THUMBINFO")
-		log.Println(&ThumbINFO)
 	}
 	return
-	// return ThumbINFO
-	// return thumbINFO
 }
 
 //NoArtList exported to setup
@@ -132,11 +113,7 @@ var NoArtList []string
 
 //FindPicPaths exported to setup
 func FindPicPaths(mpath string, noartpicpath string) (result string) {
-	fmt.Printf("\n\n this is mpath %s", mpath)
 	_, _, movename, _ := myPathSplit(mpath)
-	fmt.Printf("\n THIS IS MOVENAME %s", movename)
-
-
 	Tses := DBcon()
 	defer Tses.Close()
 	MTc := Tses.DB("movbsthumb").C("movbsthumb")
@@ -147,14 +124,12 @@ func FindPicPaths(mpath string, noartpicpath string) (result string) {
 	if err != nil {
 		log.Println(err)
 	}
-	fmt.Printf("\n THIS IS THUMBI %s", ThumbI)
 	LenI := len(ThumbI)
 	if LenI == 0 {
 		NoArtList = append(NoArtList, mpath)
 		result = noartpicpath
 	} else {
 		result = ThumbI[0]["thumbpath"]
-		fmt.Printf("\n THIS IS THUMBI.THUMBPATH:  %s", ThumbI[0]["thumbpath"])
 	}
 	fmt.Printf("this is result %s", result)
 	return
