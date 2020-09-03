@@ -536,7 +536,8 @@ func MovSetupVariableHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	r := mux.NewRouter()
-	s := r.PathPrefix("/static").Subrouter()
+	// s := r.PathPrefix("/static").Subrouter()
+	s := r.PathPrefix("/fsData").Subrouter()
 	r.HandleFunc("/intAction", intActionHandler)
 	r.HandleFunc("/intCartoons", intCartoonsHandler)
 	r.HandleFunc("/intComedy", intComedyHandler)
