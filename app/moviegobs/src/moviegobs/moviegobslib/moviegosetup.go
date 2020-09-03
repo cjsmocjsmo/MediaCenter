@@ -168,10 +168,10 @@ func SetUp() (ExStat int) {
 	} else {
 		fmt.Println("thumb dir populated")
 	}
-	// err = filepath.Walk(os.Getenv("MOVIEGOBS_MOVIES_PATH"), myDirVisit)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
+	err = filepath.Walk(os.Getenv("MOVIEGOBS_MOVIES_PATH"), myDirVisit)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	os.Setenv("MOVIEGOBS_SETUP", "0")
 	fmt.Printf("this is noartlist :: %s", NoArtList)
