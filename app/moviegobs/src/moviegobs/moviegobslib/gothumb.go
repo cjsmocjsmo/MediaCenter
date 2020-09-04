@@ -76,25 +76,25 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 		BP := "/" + url.QueryEscape(basepath)
 		thumbpathtwo := MSA + ":" + MSP + MTPP + BP
 		ThumbINFO.ThumbPathTwo = thumbpathtwo
-		thumbpath := "/root/fsData/Thumbs/" + basepath
-		// thumbpath := MSA + ":" + MSP + "/Thumbs/" + basepath
-		ThumbINFO.ThumbPath = thumbpath
+		thumbpathone := "/root/fsData/Thumbs/" + basepath
+		// thumbpathone := MSA + ":" + MSP + "/Thumbs/" + basepath
+		ThumbINFO.ThumbPath = thumbpathone
 		ThumbINFO.ThumbID = UUID()
-		_, err := os.Stat(thumbpath)
+		_, err := os.Stat(thumbpathone)
 		if err == nil {
-			log.Printf("FILE %s EXISTS", thumbpath)
+			log.Printf("FILE %s EXISTS", thumbpathone)
 		} else if os.IsNotExist(err) {
 			pic, err := imaging.Open(p)
 			if err != nil {
 				log.Printf("\n this is file Open error jpgthumb %v \n", p)
 			}
 			thumbImage := imaging.Resize(pic, 0, 250, imaging.Lanczos)
-			err = imaging.Save(thumbImage, thumbpath)
+			err = imaging.Save(thumbImage, thumbpathone)
 			if err != nil {
 				fmt.Println(err)
 			}
 		} else {
-			log.Printf("file %s stat error: %v", thumbpath, err)
+			log.Printf("file %s stat error: %v", thumbpathone, err)
 		}
 		fmt.Printf("THIS IS THUMBINFO:\n %s", &ThumbINFO)
 		cmtses := DBcon()
