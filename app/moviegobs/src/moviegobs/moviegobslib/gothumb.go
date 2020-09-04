@@ -97,6 +97,7 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 			log.Printf("file %s stat error: %v", thumbpathone, err)
 		}
 		fmt.Printf("THIS IS THUMBINFO:\n %s", &ThumbINFO)
+		fmt.Printf("THIS IS THUMBPATH: %s", ThumbINFO.ThumbPath)
 		cmtses := DBcon()
 		defer cmtses.Close()
 		CMTc := cmtses.DB("movbsthumb").C("movbsthumb")
@@ -125,6 +126,7 @@ func FindPicPaths(mpath string, noartpicpath string) (result string) {
 		log.Println(err)
 	}
 	LenI := len(ThumbI)
+	fmt.Printf("THIS IS THUMBI %s \n", ThumbI)
 	if LenI == 0 {
 		NoArtList = append(NoArtList, mpath)
 		result = noartpicpath
