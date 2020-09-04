@@ -12,7 +12,7 @@ services:
     #   - mongovol:/data/db
 
   app:
-    image: app:2.9
+    image: app:3.0
     build: ./app
     environment:
       - MOVIEGOBS_SETUP=1
@@ -46,7 +46,7 @@ services:
       - db
 
   tvapp:
-    image: tvapp:2.7
+    image: tvapp:2.8
     build: ./tvapp
     environment:
       - TVGOBS_SETUP=1
