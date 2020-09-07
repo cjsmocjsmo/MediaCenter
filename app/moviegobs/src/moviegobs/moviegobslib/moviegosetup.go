@@ -158,7 +158,7 @@ func SetUp() (ExStat int) {
 	sess.Close()
 	fmt.Println("moviegobs and movbsthumb dbs have been dropped")
 	//Check thumbnail dir create thumbs if empty
-	empty, err := isDirEmpty("/root/fsData/Thumbs")
+	empty, err := isDirEmpty("/root/static")
 	if empty {
 		filepath.Walk("/root/fsData/Posters2", posterdirVisit)
 	} else {
