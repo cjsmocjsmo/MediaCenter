@@ -2,7 +2,8 @@ version: "3.3"
 
 services:
   db:
-    image: andresvidal/rpi3-mongodb3:latest
+    image: mongo:latest
+    # image: andresvidal/rpi3-mongodb3:latest
     networks:
       - moviegobs
       - tvgobs
