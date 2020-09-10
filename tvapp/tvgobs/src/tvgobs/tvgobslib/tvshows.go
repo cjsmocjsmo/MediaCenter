@@ -39,7 +39,7 @@ type TVShowInfoS struct {
 func getTvShowInfo(apath string, tvshowpicPath string) (TvSI TVShowInfoS) {
 	_, filename := path.Split(apath)
 	// /root/fsData/TVShows/Enterprise/S1/filename.mp4
-	fspath := apath[19:]
+	fspath := apath[20:]
 	boo := len(filename) - 4
 	TvSI.ID = bson.NewObjectId()
 	TvSI.FilePath = apath
