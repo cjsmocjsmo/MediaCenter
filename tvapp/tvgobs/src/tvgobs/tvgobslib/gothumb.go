@@ -1,7 +1,8 @@
-package moviegolib
+package tvgobslib
 
 import (
 	"fmt"
+	// its blank because I want it
 	_ "image/jpeg"
 	_ "image/png"
 	"log"
@@ -87,7 +88,7 @@ func CreateMoviesThumbnail(p string) (thumbINFO ThumbInFo) {
 //NoArtList exported to setup
 var NoArtList []string
 
-//so setup
+// FindPicPaths is exported because I want it
 func FindPicPaths(mpath string, noartpicpath string) (result string) {
 	_, _, movename, _ := myPathSplit(mpath)
 	fmt.Printf("this is movename from findpicpaths %s", movename)

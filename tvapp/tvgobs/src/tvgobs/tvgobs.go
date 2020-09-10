@@ -355,8 +355,8 @@ func playMediaReactHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&MediaInfo)
 }
 
-//UpdateHandler updates the db with newly added music
-func UpdateHandler(w http.ResponseWriter, r *http.Request) {
+//SetUpHandler Setups the db with newly added music
+func SetUpHandler(w http.ResponseWriter, r *http.Request) {
 	val, _ := os.LookupEnv("TVGOBS_SETUP")
 	var exitstatus int
 	if val == "0" {
@@ -422,10 +422,12 @@ func main() {
 	r.HandleFunc("/intVoyager", intVoyagerHandler)
 	r.HandleFunc("/playMedia", playMediaHandler)
 	r.HandleFunc("/playMediaReact", playMediaReactHandler)
-	r.HandleFunc("/Update", UpdateHandler)
+
+	r.HandleFunc("/SetUp", SetUpHandler)
+	// need to add UpDate
+	
 	r.HandleFunc("/DropTVDataBase", DropTVDataBaseHandler)
 	r.HandleFunc("/TVDBCount", TVDBCountHandler)
-
 	r.HandleFunc("/TVSetupStatus", TVSetupStatusHandler)
 	s.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir(""))))
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("/media/"))))
