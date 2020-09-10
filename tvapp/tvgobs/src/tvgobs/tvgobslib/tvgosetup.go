@@ -40,7 +40,7 @@ func isDirEmpty(name string) (bool, error) {
 }
 
 func processTVShowInfo(pAth string) {
-	log.Println("Process_Movs has started")
+	log.Println("\n\n Process_TVShows has started")
 	offset := len(pAth) - 4
 	noextPath := pAth[:offset]
 	jpgextPath := noextPath + ".jpg"
