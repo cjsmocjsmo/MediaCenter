@@ -77,8 +77,6 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 		thumbpathtwo := MSA + ":" + MSP + MTPP + BP
 		ThumbINFO.ThumbPathTwo = thumbpathtwo
 		thumbpathone := "./static/" + basepath
-		fmt.Printf("THIS IS THUMBPATHONE %s \n", thumbpathone)
-		// thumbpathone := MSA + ":" + MSP + "/Thumbs/" + basepath
 		ThumbINFO.ThumbPath = thumbpathone
 		ThumbINFO.ThumbID = UUID()
 		_, err := os.Stat(thumbpathone)
@@ -97,8 +95,6 @@ func CreateMoviesThumbnail(p string) (ThumbINFO ThumbInFo) {
 		} else {
 			log.Printf("file %s stat error: %v", thumbpathone, err)
 		}
-		fmt.Printf("THIS IS THUMBINFO:\n %s", &ThumbINFO)
-		fmt.Printf("THIS IS THUMBPATH: %s", ThumbINFO.ThumbPath)
 		cmtses := DBcon()
 		defer cmtses.Close()
 		CMTc := cmtses.DB("movbsthumb").C("movbsthumb")

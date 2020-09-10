@@ -4,15 +4,15 @@ import (
 	"fmt"
 	// "io"
 	"log"
-	// "os"
-	// "path/filepath"
+	"os"
+	"path/filepath"
 	// "time"
 	// "strings"
 	// "github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 )
 
-func nameInDbCheck(fn string) (result bool) {
+func movNameInDbCheck(fn string) (result bool) {
 	sess := DBcon()
 	defer sess.Close()
 	MTc := sess.DB("moviegobs").C("moviegobs")
@@ -32,19 +32,49 @@ func nameInDbCheck(fn string) (result bool) {
 	return
 }
 
-//UpdateMain comment
-// add dir counts at setup time
-// get dir list
-// glob each dir for count
-// check count in database from setup
-
-func updateMain(filename string) (finished bool) {
-	namecheck := nameInDbCheck(filename)
-	if namecheck {
-		fmt.Println("Movie already in DB")
-	} else {
-		picinfo := CreateMoviesThumbnail(filename)
-		GetMovieInfo(filename, picinfo.ThumbPath)
+func updateDirVisit(pAth string, f os.FileInfo, err error) error {
+	log.Printf("this is path: %s", pAth)
+	if err != nil {
+		fmt.Println(err) // can't walk here,
+		return nil // not a file.  ignore.
 	}
-	return true
+	if f.IsDir() {
+		return nil
+	}
+	ext := filepath.Ext(pAth)
+	if ext == "" {
+		return nil //not a pic or movie
+	} else if ext == ".mp4" {
+		if !movNameInDbCheck(pAth) {
+			ProcessMovs(pAth)
+		}
+	} else if ext == ".avi" {
+		if !movNameInDbCheck(pAth) {
+			ProcessMovs(pAth)
+		}
+	} else if ext == ".mkv" {
+		if !movNameInDbCheck(pAth) {
+			ProcessMovs(pAth)
+		}
+	} else if ext == ".m4v" {
+		if !movNameInDbCheck(pAth) {
+			ProcessMovs(pAth)
+		}
+	}
+	return nil
+}
+
+func scanFileNames() {
+	err := filepath.Walk(os.Getenv("MOVIEGOBS_MOVIES_PATH"), updateDirVisit)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+var finished bool = false
+// UpdateMain needs to be exported
+func UpdateMain() (finished bool) {
+	scanFileNames()
+	finished = true
+	return
 }

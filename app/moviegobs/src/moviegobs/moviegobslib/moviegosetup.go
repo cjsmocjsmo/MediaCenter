@@ -3,8 +3,10 @@ package moviegolib
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
+	"path"
 	"path/filepath"
 	"time"
 	"strings"
@@ -41,7 +43,8 @@ func isDirEmpty(name string) (bool, error) {
 	return false, err
 }
 
-func processMovs(pAth string) {
+//ProcessMovs is needed in update
+func ProcessMovs(pAth string) {
 	log.Println("Process_Movs has started")
 	var movpicPath string
 
@@ -108,7 +111,7 @@ func genMatch(patH string, mtv bool) {
 		fmt.Println(patH)
 		// processTVShow(patH)
 	} else {
-		processMovs(patH)
+		ProcessMovs(patH)
 	}
 }
 
@@ -116,10 +119,10 @@ func myDirVisit(pAth string, f os.FileInfo, err error) error {
 	log.Printf("this is path: %s", pAth)
 	if err != nil {
 		fmt.Println(err) // can't walk here,
-		return nil       // but continue walking elsewhere
+		return nil // not a file.  ignore.
 	}
 	if f.IsDir() {
-		return nil // not a file.  ignore.
+		return nil
 	}
 	ext := filepath.Ext(pAth)
 	if ext == "" {
@@ -143,6 +146,16 @@ func myDirVisit(pAth string, f os.FileInfo, err error) error {
 	return nil
 }
 
+
+func removeFiles() {
+    dir, _ := ioutil.ReadDir("/root/static")
+    for _, d := range dir {
+        os.RemoveAll(path.Join([]string{"tmp", d.Name()}...))
+    }
+}
+
+
+
 //SetUp is exported to main
 func SetUp() (ExStat int) {
 	//Start the timer
@@ -162,7 +175,9 @@ func SetUp() (ExStat int) {
 	if empty {
 		filepath.Walk("/root/fsData/Posters2", posterdirVisit)
 	} else {
-		fmt.Println("thumb dir populated")
+		removeFiles()
+		filepath.Walk("/root/fsData/Posters2", posterdirVisit)
+		fmt.Println("thumb dir populated \n files removed \n thumbs created")
 	}
 	err = filepath.Walk(os.Getenv("MOVIEGOBS_MOVIES_PATH"), myDirVisit)
 	if err != nil {

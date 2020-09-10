@@ -350,9 +350,6 @@ func intTremorsHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(TremorsMedia)
 }
 
-
-
-
 func intJohnWickHandler(w http.ResponseWriter, r *http.Request) {
 	ses := dBcon()
 	defer ses.Close()
@@ -389,7 +386,6 @@ func intPiratesHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(PiratesMedia)
 }
 
-
 func intDieHardHandler(w http.ResponseWriter, r *http.Request) {
 	ses := dBcon()
 	defer ses.Close()
@@ -407,13 +403,6 @@ func intDieHardHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "max-age=370739520, public")
 	json.NewEncoder(w).Encode(DieHardMedia)
 }
-
-
-
-
-
-
-
 
 func playMediaHandler(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.URL.String())
@@ -487,8 +476,8 @@ func playMediaReactHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(mf)
 }
 
-//UpdateHandler updates the db with newly added music
-func UpdateHandler(w http.ResponseWriter, r *http.Request) {
+//SetUpHandler updates the db with newly added music
+func SetUpHandler(w http.ResponseWriter, r *http.Request) {
 	val, _ := os.LookupEnv("MOVIEGOBS_SETUP")
 	var exitstatus int
 	if val == "0" {
@@ -505,6 +494,38 @@ func UpdateHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(exitstatus)
 }
+
+
+
+
+
+
+
+
+
+
+
+// UpdateHandler needs exporting because I want it
+func UpdateHandler(w http.ResponseWriter, r *http.Request) {
+	moviegolib.UpdateMain()
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode("0")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //MovDBCountHandler bla bla
 func MovDBCountHandler(w http.ResponseWriter, r *http.Request) {
@@ -537,7 +558,6 @@ func MovSetupVariableHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := mux.NewRouter()
 	s := r.PathPrefix("/static").Subrouter()
-	// s := r.PathPrefix("/fsData").Subrouter()
 	r.HandleFunc("/intAction", intActionHandler)
 	r.HandleFunc("/intCartoons", intCartoonsHandler)
 	r.HandleFunc("/intComedy", intComedyHandler)
@@ -562,6 +582,7 @@ func main() {
 	r.HandleFunc("/playMediaReact", playMediaReactHandler)
 	r.HandleFunc("/MovDBCount", MovDBCountHandler)
 	r.HandleFunc("/MovSetupVariable", MovSetupVariableHandler)
+	r.HandleFunc("/SetUp", SetUpHandler)
 	r.HandleFunc("/Update", UpdateHandler)
 	s.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir(""))))
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("/media/"))))
