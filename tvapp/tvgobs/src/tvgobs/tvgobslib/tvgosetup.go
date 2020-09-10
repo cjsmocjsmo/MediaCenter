@@ -53,6 +53,7 @@ func processTVShowInfo(pAth string) {
 
 	// var TvI TVShowInfoS
 	TvI := getTvShowInfo(pAth, tvpicPath)
+	fmt.Printf("\n\n THIS IS TVI %s \n\n", TvI)
 	ses := DBcon()
 	defer ses.Close()
 	MTc := ses.DB("tvgobs").C("tvgobs")

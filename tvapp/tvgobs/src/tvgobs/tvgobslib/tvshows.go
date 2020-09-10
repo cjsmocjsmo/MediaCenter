@@ -1,7 +1,7 @@
 package tvgolib
 
 import (
-	// "fmt"
+	"fmt"
 	"time"
 	"math/rand"
 	"path"
@@ -87,6 +87,7 @@ func getTvShowInfo(apath string, tvshowpicPath string) (TvSI TVShowInfoS) {
 			TvSI.Title = filename[21:boo]
 			TvSI.Series = "The Last Ship"
 	}
+	fmt.Printf("THIS IS TVI FROM TVSHOWS %s", TvSI)
 	return
 }
 
