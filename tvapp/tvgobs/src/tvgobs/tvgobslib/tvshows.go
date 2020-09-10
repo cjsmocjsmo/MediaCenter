@@ -20,7 +20,8 @@ func tvshowsUUID() (UUID string) {
 	return
 }
 
-type tVShowInfoS struct {
+// TVShowInfoS is needed because I want it
+type TVShowInfoS struct {
 	ID bson.ObjectId `bson:"_id,omitempty"`
 	FilePath string `bson:"filepath"`
 	Catagory string `bson:"catagory"`
@@ -34,7 +35,7 @@ type tVShowInfoS struct {
 	ThumbPath string `bson:"thumbpath"`
 }
 
-func getTvShowInfo(apath string, tvshowpicPath string) (TvSI tVShowInfoS) {
+func getTvShowInfo(apath string, tvshowpicPath string) (TvSI TVShowInfoS) {
 	_, filename := path.Split(apath)
 	boo := len(filename) - 4
 	TvSI.ID = bson.NewObjectId()

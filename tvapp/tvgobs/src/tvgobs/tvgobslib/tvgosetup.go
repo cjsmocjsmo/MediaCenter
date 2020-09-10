@@ -51,8 +51,8 @@ func processTVShowInfo(pAth string) {
 		tvpicPath = os.Getenv("TVGOBS_NO_ART_PIC_PATH")
 	}
 
-	var TvI tVShowInfoS
-	TvI = getTvShowInfo(pAth, tvpicPath)
+	// var TvI TVShowInfoS
+	TvI := getTvShowInfo(pAth, tvpicPath)
 	ses := DBcon()
 	defer ses.Close()
 	MTc := ses.DB("tvgobs").C("tvgobs")
