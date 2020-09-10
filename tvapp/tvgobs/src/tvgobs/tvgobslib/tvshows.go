@@ -38,13 +38,15 @@ type TVShowInfoS struct {
 
 func getTvShowInfo(apath string, tvshowpicPath string) (TvSI TVShowInfoS) {
 	_, filename := path.Split(apath)
+	// /root/fsData/TVShows/Enterprise/S1/filename.mp4
+	fspath := apath[19:]
 	boo := len(filename) - 4
 	TvSI.ID = bson.NewObjectId()
 	TvSI.FilePath = apath
 	TvSI.MediaID = tvshowsUUID()
 	TvSI.Genre = "TVShows"
 	TvSI.TVShowPicPath = tvshowpicPath
-	TvSI.TvFSPath = filename
+	TvSI.TvFSPath = fspath
 	switch {
 		case strings.Contains(apath, "TVShows/TNG"):
 			TvSI.Catagory = "TNG"
@@ -89,7 +91,7 @@ func getTvShowInfo(apath string, tvshowpicPath string) (TvSI TVShowInfoS) {
 			TvSI.Title = filename[21:boo]
 			TvSI.Series = "The Last Ship"
 	}
-	fmt.Printf("THIS IS TVI FROM TVSHOWS %s", TvSI)
+	fmt.Printf("\n THIS IS TVI FROM TVSHOWS \n %s \n", TvSI)
 	return
 }
 
