@@ -46,7 +46,7 @@ services:
       - db
 
   tvapp:
-    image: tvapp:3.0
+    image: tvapp:3.1
     build: ./tvapp
     environment:
       - TVGOBS_SETUP=1
