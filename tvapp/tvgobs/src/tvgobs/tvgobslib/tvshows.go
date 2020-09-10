@@ -1,4 +1,4 @@
-package moviegolib
+package tvgolib
 
 import (
 	// "fmt"

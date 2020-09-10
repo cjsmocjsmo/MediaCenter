@@ -1,4 +1,4 @@
-package tvgobslib
+package tvgolib
 
 import (
 	"fmt"
@@ -51,7 +51,7 @@ func processTVShowInfo(pAth string) {
 		tvpicPath = os.Getenv("TVGOBS_NO_ART_PIC_PATH")
 	}
 
-	var TvI TvShowInfoS
+	var TvI tVShowInfoS
 	TvI = getTvShowInfo(pAth, tvpicPath)
 	ses := DBcon()
 	defer ses.Close()

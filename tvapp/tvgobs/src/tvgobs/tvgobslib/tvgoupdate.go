@@ -1,4 +1,4 @@
-package tvgobslib
+package tvgolib
 
 import "fmt"
 
