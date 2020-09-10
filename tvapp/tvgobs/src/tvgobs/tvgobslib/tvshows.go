@@ -33,6 +33,7 @@ type TVShowInfoS struct {
 	Series string `bson:"series"`
 	TVShowPicPath string `bson:"tvshowpicpath"`
 	ThumbPath string `bson:"thumbpath"`
+	TvFSPath string `bson:"tvfspath"`
 }
 
 func getTvShowInfo(apath string, tvshowpicPath string) (TvSI TVShowInfoS) {
@@ -43,6 +44,7 @@ func getTvShowInfo(apath string, tvshowpicPath string) (TvSI TVShowInfoS) {
 	TvSI.MediaID = tvshowsUUID()
 	TvSI.Genre = "TVShows"
 	TvSI.TVShowPicPath = tvshowpicPath
+	TvSI.TvFSPath = filename
 	switch {
 		case strings.Contains(apath, "TVShows/TNG"):
 			TvSI.Catagory = "TNG"
